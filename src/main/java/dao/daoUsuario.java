@@ -21,15 +21,16 @@ import modelo.usuario;
  * @author Asus
  */
 public class daoUsuario extends conexion implements IUsuario{
-    Connection con = this.iniciarConexion();
+    
 
 //METODO LOGICA CONSULTAR
     @Override
     public ArrayList<Object[]> consultarUsuarios() {
         ArrayList<Object[]> listUsuarios = new ArrayList<>();
         try {
+            Connection con = this.iniciarConexion();
             String consulta = "SELECT * FROM usuarios";
-            Statement st = this.iniciarConexion().createStatement();
+            Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(consulta);
 
             while (rs.next()) {
@@ -56,8 +57,8 @@ public class daoUsuario extends conexion implements IUsuario{
         
         String consulta = "insert into usuarios (nombres, apellidos, username, contrasena)  values(?, ?, ?, ?);";
         try{
-            
-            CallableStatement cs = this.iniciarConexion().prepareCall(consulta);
+            Connection con = this.iniciarConexion();
+            CallableStatement cs = con.prepareCall(consulta);
             cs.setString(1, usu.getNombre());
             cs.setString(2, usu.getApellido());
             cs.setString(3, usu.getUsername());
@@ -78,8 +79,9 @@ public class daoUsuario extends conexion implements IUsuario{
     public boolean modificarUsuario(usuario usu) {
         boolean modificar = false;
         try{
+            Connection con = this.iniciarConexion();
             String consulta = "UPDATE usuarios set nombres = ?, apellidos = ? where id = ?;";
-            CallableStatement cs = this.iniciarConexion().prepareCall(consulta);
+            CallableStatement cs = con.prepareCall(consulta);
             cs.setString(1, usu.getNombre());
             cs.setString(2, usu.getApellido());
             cs.setInt(3, usu.getId());
@@ -101,26 +103,28 @@ public class daoUsuario extends conexion implements IUsuario{
     public boolean eliminarUsuario(usuario usu) {
         boolean eliminar = false;
         try {
+            Connection con = this.iniciarConexion();
             String consulta = "delete from usuarios where usuarios.id=?;";
-            CallableStatement cs = this.iniciarConexion().prepareCall(consulta);
+            CallableStatement cs = con.prepareCall(consulta);
             cs.setInt(1, usu.getId());
             
             eliminar = cs.execute();
             cs.close();
+            con.close();
             JOptionPane.showMessageDialog(null, "Se eliminó correctamente");
         }catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR:"+e.toString());
         }
-        
         return eliminar;
     }
     
 //METODO LOGICA validad usuario ya existente
     public boolean verificarUsuario(String paramUsuario) {
-        String consultaUsuarios = "SELECT * FROM usuarios;";
+        String consulta = "SELECT * FROM usuarios;";
         try (
-             Statement st = this.iniciarConexion().createStatement();
-             ResultSet rs = st.executeQuery(consultaUsuarios)) {
+            Connection con = this.iniciarConexion();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(consulta)) {
 
             while (rs.next()) {
                 String username = rs.getString("username");
@@ -143,8 +147,9 @@ public class daoUsuario extends conexion implements IUsuario{
     public boolean verificarInicioSesion(String paramUsuario, String paramContrasena) {
         String consultaUsuarios = "SELECT * FROM usuarios;";
         try (
-             Statement st = this.iniciarConexion().createStatement();
-             ResultSet rs = st.executeQuery(consultaUsuarios)) {
+            Connection con = this.iniciarConexion();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(consultaUsuarios)) {
 
             while (rs.next()) {
                 String username = rs.getString("username");

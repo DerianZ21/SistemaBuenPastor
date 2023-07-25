@@ -27,13 +27,8 @@ public class controladorAgregarBeneficiario {
     }
     
 
-    
-
 //METODO controlador funcion INSERTAR
     public void insertarBeneficiario(String tipoElegido){
-        
-        
-        
         
         vistaAgregarBeneficiario.setTxtTipo(tipoElegido);
         String cedula = vistaAgregarBeneficiario.getTxtCedula().getText();

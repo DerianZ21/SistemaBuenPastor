@@ -7,6 +7,8 @@ package vista;
 
 import com.toedter.calendar.JDateChooser;
 import controlador.controladorAgregarBeneficiario;
+import controlador.controladorMadre;
+import controlador.controladorPadre;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 /**
@@ -14,7 +16,9 @@ import javax.swing.JTextField;
  * @author Asus
  */
 public class vistaAgregarBeneficiario extends javax.swing.JFrame {
-    controladorAgregarBeneficiario controlador = new controladorAgregarBeneficiario(this);
+    controladorAgregarBeneficiario controladorUsuario = new controladorAgregarBeneficiario(this);
+    controladorMadre controladorMadre = new controladorMadre(this);
+    controladorPadre controladorPadre = new controladorPadre(this);
     
     
     public vistaAgregarBeneficiario() {
@@ -27,12 +31,18 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
         int respuesta = JOptionPane.showOptionDialog(this, "Seleccione el tipo de beneficiario:", "Tipo de Beneficiario",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opciones, opciones[0]);
            
-        if (respuesta == 0) {
-            txtTipo.setText(opciones[0]);
-        } else if(respuesta ==0){
-            txtTipo.setText(opciones[1]);
-        }else{
-            txtTipo.setText(opciones[2]);
+        switch (respuesta) {
+            case 0:
+                txtTipo.setText(opciones[0]);
+                break;
+            case 1:
+                controladorPadre.consultarPadres(tblPadres);
+                txtTipo.setText(opciones[1]);
+                break;
+            default:
+                controladorMadre.consultarMadres(tblPadres);
+                txtTipo.setText(opciones[2]);
+                break;
         }
     }
 
@@ -396,10 +406,4 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
     public void setTxtTipo(JTextField txtTipo) {
         this.txtTipo = txtTipo;
     }
-
-    public void setTxtTipo(String paramTipoBeneficiario) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
 }

@@ -23,17 +23,17 @@ import modelo.beneficiario;
  * @author Asus
  */
 public class daoBeneficiario extends conexion implements IBeneficiario {
-    Connection con = this.iniciarConexion();
     
 //METODO LOGICA CONSULTAR
     @Override
     public ArrayList<Object[]> consultarBeneficiario() {
         ArrayList<Object[]> listBeneficiarios = new ArrayList<>();
         try {
+            Connection con = this.iniciarConexion();
             String consulta = "SELECT p.cedula, p.nombre, p.apellido, p.tipo, p.direccion, p.email FROM persona p " +
                   "INNER JOIN beneficiario b ON p.id_persona = b.id_persona;";
 
-            Statement st = this.iniciarConexion().createStatement();
+            Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(consulta);
 
             while (rs.next()) {
@@ -67,6 +67,7 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
         boolean beneficiarioInsertado = false;
 
         try {
+            Connection con = this.iniciarConexion();
             String consultaPersona = "INSERT INTO public.persona "
                             + "(cedula, nombre, apellido, fecha_nacimiento, telefono, direccion, email, tipo) "
                             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
@@ -121,6 +122,7 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
     public boolean eliminarBeneficiario(beneficiario bene) {
         boolean eliminar = false;
         try {
+            Connection con = this.iniciarConexion();
             String consulta = "DELETE FROM persona where persona.cedula=?;";
             CallableStatement cs = con.prepareCall(consulta);
             cs.setString(1, bene.getCedula());
