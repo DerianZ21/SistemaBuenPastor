@@ -35,6 +35,7 @@ public class controladorLogin {
         try{
             if(usuarioTexto.isEmpty()||contrasenaTexto.isEmpty()){
                 JOptionPane.showMessageDialog(vistaLogin, "Por favor, ingresa usurio y contrasena", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
             }else if(dao.verificarInicioSesion(usuarioTexto, contrasenaTexto)){
                 return true;
             }

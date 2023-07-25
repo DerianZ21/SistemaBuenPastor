@@ -12,7 +12,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import modelo.usuario;
-import vista.vistaLogin;
 import vista.vistaUsuarios;
 
 /**
@@ -23,9 +22,11 @@ public class controladorUsuario {
     private final vistaUsuarios vistaUsuario;
     usuario usu = new usuario();
     daoUsuario dao = new daoUsuario();
+    
     public controladorUsuario(vistaUsuarios vistaUsuario) {
         this.vistaUsuario = vistaUsuario;
     }
+    
     
 //MEDOTO controlador funcion CONSULTAR
     public void consultarUsuarios(JTable paramTablaUsuarios) {
@@ -92,7 +93,6 @@ public class controladorUsuario {
                 
                 dao.modificarUsuario(usu);
             }
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(vistaUsuario, "ERROR:"+e.toString());
         }

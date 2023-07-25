@@ -18,7 +18,6 @@ public class vistaUsuarios extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         txtIDUsuarios.disable();
-        usuario objUsuarios = new usuario();
         controlador.consultarUsuarios(tbListaUsuarios);
     }
 

@@ -26,7 +26,7 @@ public class daoUsuario extends conexion implements IUsuario{
 //METODO LOGICA CONSULTAR
     @Override
     public ArrayList<Object[]> consultarUsuarios() {
-        ArrayList<Object[]> listUsuarios = new ArrayList<Object[]>();
+        ArrayList<Object[]> listUsuarios = new ArrayList<>();
         try {
             String consulta = "SELECT * FROM usuarios";
             Statement st = this.iniciarConexion().createStatement();
@@ -54,7 +54,7 @@ public class daoUsuario extends conexion implements IUsuario{
     public boolean insertarUsuario(usuario usu) {
         boolean insertar = false;
         
-        String consulta = "insert into usuarios (nombres, apellidos, username, contraseña)  values(?, ?, ?, ?);";
+        String consulta = "insert into usuarios (nombres, apellidos, username, contrasena)  values(?, ?, ?, ?);";
         try{
             
             CallableStatement cs = this.iniciarConexion().prepareCall(consulta);
@@ -107,7 +107,6 @@ public class daoUsuario extends conexion implements IUsuario{
             
             eliminar = cs.execute();
             cs.close();
-            con.close();
             JOptionPane.showMessageDialog(null, "Se eliminó correctamente");
         }catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR:"+e.toString());

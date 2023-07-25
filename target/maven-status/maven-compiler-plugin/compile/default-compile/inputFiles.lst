@@ -1,7 +1,9 @@
 C:\Users\Asus\Documents\NetBeansProjects\javaCRUDPostgres\src\main\java\idao\IBeneficiario.java
 C:\Users\Asus\Documents\NetBeansProjects\javaCRUDPostgres\src\main\java\modelo\usuario.java
+C:\Users\Asus\Documents\NetBeansProjects\javaCRUDPostgres\src\main\java\vista\vistaAgregarBeneficiario.java
 C:\Users\Asus\Documents\NetBeansProjects\javaCRUDPostgres\src\main\java\dao\daoUsuario.java
 C:\Users\Asus\Documents\NetBeansProjects\javaCRUDPostgres\src\main\java\vista\vistaUsuarios.java
+C:\Users\Asus\Documents\NetBeansProjects\javaCRUDPostgres\src\main\java\controlador\controladorAgregarBeneficiario.java
 C:\Users\Asus\Documents\NetBeansProjects\javaCRUDPostgres\src\main\java\com\mycompany\javacrudpostgres\JavaCRUDPostgres.java
 C:\Users\Asus\Documents\NetBeansProjects\javaCRUDPostgres\src\main\java\modelo\beneficiario.java
 C:\Users\Asus\Documents\NetBeansProjects\javaCRUDPostgres\src\main\java\vista\vistaLogin.java
@@ -13,3 +15,4 @@ C:\Users\Asus\Documents\NetBeansProjects\javaCRUDPostgres\src\main\java\vista\vi
 C:\Users\Asus\Documents\NetBeansProjects\javaCRUDPostgres\src\main\java\controlador\controladorLogin.java
 C:\Users\Asus\Documents\NetBeansProjects\javaCRUDPostgres\src\main\java\modelo\persona.java
 C:\Users\Asus\Documents\NetBeansProjects\javaCRUDPostgres\src\main\java\vista\vistaMenuPrincipal.java
+C:\Users\Asus\Documents\NetBeansProjects\javaCRUDPostgres\src\main\java\controlador\controladorBeneficiario.java

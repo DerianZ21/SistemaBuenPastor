@@ -16,5 +16,5 @@ public interface IBeneficiario {
     public boolean insertarBeneficiario(beneficiario bene);
     public boolean eliminarBeneficiario(beneficiario bene);
     public boolean modificarBeneficiario(beneficiario bene);
-    public ArrayList<Object[]> consultarUsuarios();
+    public ArrayList<Object[]> consultarBeneficiario();
 }
