@@ -10,7 +10,6 @@ import dao.daoMadre;
 import dao.daoPadre;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -25,6 +24,7 @@ import vista.vistaAgregarBeneficiario;
  * @author Asus
  */
 public class controladorAgregarBeneficiario {
+
     private final vistaAgregarBeneficiario vistaAgregarBeneficiario;
     beneficiario bene = new beneficiario();
     madre ma = new madre();
@@ -32,10 +32,11 @@ public class controladorAgregarBeneficiario {
     daoBeneficiario daoBeneficiario = new daoBeneficiario();
     daoMadre daoMadre = new daoMadre();
     daoPadre daoPadre = new daoPadre();
+
     public controladorAgregarBeneficiario(vistaAgregarBeneficiario vistaAgregarBeneficiario) {
         this.vistaAgregarBeneficiario = vistaAgregarBeneficiario;
     }
-    
+
 //MEDOTO controlador funcion CONSULTAR
     public void consultarMadres(JTable paramTabla) {
         DefaultTableModel modelo = new DefaultTableModel();
@@ -47,13 +48,12 @@ public class controladorAgregarBeneficiario {
             for (Object[] madre : listMadres) {
                 modelo.addRow(madre);
             }
-        paramTabla.setModel(modelo);
-        
+            paramTabla.setModel(modelo);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "ERROR en controlador madre: " + e.toString());
         }
     }
-    
 
 //MEDOTO controlador funcion CONSULTAR
     public void consultarPadres(JTable paramTabla) {
@@ -63,18 +63,18 @@ public class controladorAgregarBeneficiario {
         modelo.addColumn("Apellido");
         try {
             ArrayList<Object[]> listPadres = daoPadre.consultarPadres();
-            for (Object[] padres : listPadres) {
+            listPadres.forEach((padres) -> {
                 modelo.addRow(padres);
-            }
-        paramTabla.setModel(modelo);
-        
+            });
+            paramTabla.setModel(modelo);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "ERROR en controlador madre: " + e.toString());
         }
     }
 
 //METODO controlador funcion INSERTAR PADRES
-    public void insertarBeneficiarioPadres(){
+    public void insertarBeneficiarioPadres() {
         String cedula = vistaAgregarBeneficiario.getTxtCedula().getText();
         String nombre = vistaAgregarBeneficiario.getTxtNombre().getText();
         String apellido = vistaAgregarBeneficiario.getTxtApellido().getText();
@@ -83,13 +83,15 @@ public class controladorAgregarBeneficiario {
         String direccion = vistaAgregarBeneficiario.getTxtDireccion().getText();
         String email = vistaAgregarBeneficiario.getTxtEmail().getText();
         String tipo = vistaAgregarBeneficiario.getTxtTipo().getText();
-        
+
         try {
-            if (cedula.isEmpty()||nombre.isEmpty()||apellido.isEmpty()||fechaNacimiento== null
-                ||telefono.isEmpty()||direccion.isEmpty()||email.isEmpty()||tipo.isEmpty()) {
+            if (cedula.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento == null
+                    || telefono.isEmpty() || direccion.isEmpty() || email.isEmpty() || tipo.isEmpty()) {
                 JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "Por favor llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-            }else{
-                
+            } else if(daoBeneficiario.verificarCedula(cedula)){
+                JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "La cedula que usted ingresó ya existe, verifique su inforamción", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+
                 bene.setCedula(cedula);
                 bene.setNombre(nombre);
                 bene.setApellido(apellido);
@@ -98,19 +100,17 @@ public class controladorAgregarBeneficiario {
                 bene.setDireccion(direccion);
                 bene.setEmail(email);
                 bene.setTipo(tipo);
-                
-                
+
                 daoBeneficiario.insertarBeneficiarioPadres(bene);
-                
+
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "ERROR:"+e.toString());
+            JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "ERROR:" + e.toString());
         }
     }
-  
-    
+
 // METODO controlador funcion INSERTAR hijo
-    public void insertarBeneficiariohijo(){
+    public void insertarBeneficiariohijo() {
         String cedula = vistaAgregarBeneficiario.getTxtCedula().getText();
         String nombre = vistaAgregarBeneficiario.getTxtNombre().getText();
         String apellido = vistaAgregarBeneficiario.getTxtApellido().getText();
@@ -125,14 +125,14 @@ public class controladorAgregarBeneficiario {
         String cedulaPadre = vistaAgregarBeneficiario.getTxtCedulaPadre().getText();
         String nombrePadre = vistaAgregarBeneficiario.getTxtNombrePadre().getText();
         String apellidoPadre = vistaAgregarBeneficiario.getTxtApellidoPadre().getText();
-          
-        
+
         try {
-            if (cedula.isEmpty()||nombre.isEmpty()||apellido.isEmpty()||fechaNacimiento== null
-                ||telefono.isEmpty()||direccion.isEmpty()||email.isEmpty()||tipo.isEmpty()) {
+            if (cedula.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento == null
+                    || telefono.isEmpty() || direccion.isEmpty() || email.isEmpty() || tipo.isEmpty()) {
                 JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "Por favor llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-            }else{
-                
+            } else if(daoBeneficiario.verificarCedula(cedula)){
+                JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "La cedula que usted ingresó ya existe, verifique su inforamción", "Error", JOptionPane.ERROR_MESSAGE);
+            }else {
                 bene.setCedula(cedula);
                 bene.setNombre(nombre);
                 bene.setApellido(apellido);
@@ -141,41 +141,52 @@ public class controladorAgregarBeneficiario {
                 bene.setDireccion(direccion);
                 bene.setEmail(email);
                 bene.setTipo(tipo);
+            
+               
+                if(!cedulaMadre.isEmpty()&&!nombreMadre.isEmpty()&&!apellidoMadre.isEmpty()){
+                    ma.setCedula(cedulaMadre);
+                    ma.setNombre(nombreMadre);
+                    ma.setApellido(apellidoMadre);
+                }else{
+                    ma.setCedula("");
+                    ma.setNombre("");
+                    ma.setApellido("");
+                }
                 
-                ma.setCedula(cedulaMadre);
-                ma.setNombre(nombreMadre);
-                ma.setApellido(apellidoMadre);
+                if(!cedulaPadre.isEmpty()&&!nombrePadre.isEmpty()&&!apellidoPadre.isEmpty()){
+                    pa.setCedula(cedulaPadre);
+                    pa.setNombre(nombrePadre);
+                    pa.setApellido(apellidoPadre);
+                }else{
+                    pa.setCedula("");
+                    pa.setNombre("");
+                    pa.setApellido("");
+                }
                 
-                pa.setCedula(cedulaPadre);
-                pa.setNombre(nombrePadre);
-                pa.setApellido(apellidoPadre);
                 
-                daoBeneficiario.insertarBeneficiarioHijo(bene);
-                daoMadre.insertarMadre(ma);
-                daoPadre.insertarPadre(pa);
-                
-                if(daoBeneficiario.insertarBeneficiarioHijo(bene)&&daoMadre.insertarMadre(ma)&&daoPadre.insertarPadre(pa)){
+                boolean insertado = daoBeneficiario.insertarBeneficiarioHijo(bene, pa, ma);
+                if (insertado) {
                     JOptionPane.showMessageDialog(null, "Se insertó correctamente");
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "ERROR:"+e.toString());
+            JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "ERROR:" + e.toString());
         }
     }
-    
+
 //METODO controlador funcion llenar campos al seleccionar tabla
-    public void seleccionarPadreMadre(JTable paramTablaUsuarios, JTextField paramCedula, JTextField paramNombre,  JTextField paramApellido){
+    public void seleccionarPadreMadre(JTable paramTablaUsuarios, JTextField paramCedula, JTextField paramNombre, JTextField paramApellido) {
         try {
             int fila = paramTablaUsuarios.getSelectedRow();
-            if(fila>=0){
+            if (fila >= 0) {
                 paramCedula.setText(paramTablaUsuarios.getValueAt(fila, 0).toString());
                 paramNombre.setText(paramTablaUsuarios.getValueAt(fila, 1).toString());
                 paramApellido.setText(paramTablaUsuarios.getValueAt(fila, 2).toString());
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Error al seleccionar la fila");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERROR:"+e.toString());
+            JOptionPane.showMessageDialog(null, "ERROR:" + e.toString());
         }
     }
 }

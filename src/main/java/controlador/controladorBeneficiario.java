@@ -18,16 +18,16 @@ import vista.vistaBeneficiarios;
  * @author Asus
  */
 public class controladorBeneficiario {
+
     private final vistaBeneficiarios vistaBeneficiarios;
-    
+
     beneficiario bene = new beneficiario();
     daoBeneficiario dao = new daoBeneficiario();
 
     public controladorBeneficiario(vistaBeneficiarios vistaBeneficiarios) {
         this.vistaBeneficiarios = vistaBeneficiarios;
     }
-   
-    
+
 //MEDOTO controlador funcion CONSULTAR
     public void consultarBeneficiario(JTable paramTablaBeneficiario) {
         DefaultTableModel modelo = new DefaultTableModel();
@@ -42,14 +42,13 @@ public class controladorBeneficiario {
             for (Object[] beneficiario : listBeneficiario) {
                 modelo.addRow(beneficiario);
             }
-        paramTablaBeneficiario.setModel(modelo);
-        
+            paramTablaBeneficiario.setModel(modelo);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(vistaBeneficiarios, "ERROR controlador beneficiario: " + e.toString());
         }
     }
 
-    
 //MEDOTO controlador funcion ELIMINAR
     public void eliminarBeneficiario() {
         try {
@@ -57,17 +56,17 @@ public class controladorBeneficiario {
             if (filaSeleccionada == -1) {
                 JOptionPane.showMessageDialog(vistaBeneficiarios, "Por favor, seleccione un usuario.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                int indiceCedula = 0; 
+                int indiceCedula = 0;
 
                 String cedulaTexto = (String) vistaBeneficiarios.getTblBeneficiario().getValueAt(filaSeleccionada, indiceCedula);
-           
-                    bene.setCedula(cedulaTexto);
-                    dao.eliminarBeneficiario(bene);
-                
+
+                bene.setCedula(cedulaTexto);
+                dao.eliminarBeneficiario(bene);
+
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(vistaBeneficiarios, "ERROR: " + e.toString());
         }
     }
-    
+
 }

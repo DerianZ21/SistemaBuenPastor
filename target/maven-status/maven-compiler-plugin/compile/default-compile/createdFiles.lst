@@ -5,7 +5,6 @@ vista\vistaBeneficiarios$2.class
 modelo\usuario.class
 idao\IPadre.class
 vista\vistaAgregarBeneficiario$4.class
-modelo\representates.class
 vista\vistaUsuarios$4.class
 com\mycompany\javacrudpostgres\JavaCRUDPostgres.class
 idao\IBeneficiario.class
