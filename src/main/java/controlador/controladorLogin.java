@@ -45,5 +45,4 @@ public class controladorLogin {
         JOptionPane.showMessageDialog(vistaLogin, "Usuario y contraseña incorrectas", "Error", JOptionPane.ERROR_MESSAGE);
         return false;
     }
-    
 }

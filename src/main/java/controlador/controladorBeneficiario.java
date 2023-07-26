@@ -26,7 +26,6 @@ public class controladorBeneficiario {
     public controladorBeneficiario(vistaBeneficiarios vistaBeneficiarios) {
         this.vistaBeneficiarios = vistaBeneficiarios;
     }
-    
    
     
 //MEDOTO controlador funcion CONSULTAR
@@ -49,8 +48,6 @@ public class controladorBeneficiario {
             JOptionPane.showMessageDialog(vistaBeneficiarios, "ERROR controlador beneficiario: " + e.toString());
         }
     }
- 
-
 
     
 //MEDOTO controlador funcion ELIMINAR
@@ -74,6 +71,3 @@ public class controladorBeneficiario {
     }
     
 }
-
-
-

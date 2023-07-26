@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package idao;
+package modelo;
 
-import java.util.ArrayList;
-import modelo.madre;
 /**
  *
  * @author Asus
  */
-public interface IMadre {
-    public ArrayList<Object[]> consultarMadres();
-    public boolean insertarMadre(madre ma);
+public class representates  {
+    
 }

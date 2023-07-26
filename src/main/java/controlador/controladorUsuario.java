@@ -133,5 +133,4 @@ public class controladorUsuario {
             JOptionPane.showMessageDialog(null, "ERROR:"+e.toString());
         }
     }
-    
 }

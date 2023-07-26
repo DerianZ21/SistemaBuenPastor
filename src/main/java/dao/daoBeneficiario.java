@@ -57,17 +57,77 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
         return listBeneficiarios;
     }
 
-    
-    
-//METODO LOGICA INSERTAR
+//METODO LOGICA INSERTAR PADRES
     @Override
-    public boolean insertarBeneficiario(beneficiario bene) {
+    public boolean insertarBeneficiarioPadres(beneficiario bene) {
+        boolean personaActualizada = false;
+        boolean beneficiarioInsertado = false;
+        boolean insertar = false;
+        try {
+            Connection con = this.iniciarConexion();
+            String consultaPersona = "UPDATE public.persona "
+                    + "SET nombre = ?, apellido = ?, fecha_nacimiento = ?, telefono = ?, direccion = ?, email = ?, tipo = ? "
+                    + "WHERE cedula = ?;";
+            PreparedStatement psp = con.prepareStatement(consultaPersona);
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String formattedDate = simpleDateFormat.format(bene.getFecha_nacimiento());
+            java.sql.Date fecha_nacimiento = java.sql.Date.valueOf(formattedDate);
+
+            
+            psp.setString(1, bene.getNombre());
+            psp.setString(2, bene.getApellido());
+            psp.setDate(3, fecha_nacimiento);
+            psp.setString(4, bene.getTelefono());
+            psp.setString(5, bene.getDireccion());
+            psp.setString(6, bene.getEmail());
+            psp.setString(7, bene.getTipo());
+            psp.setString(8, bene.getCedula());
+
+            personaActualizada = psp.executeUpdate() > 0;
+            
+            psp.close();
+            
+            int idPersona=-1;
+            String consulta = "SELECT id_persona FROM public.persona WHERE cedula = ?";
+            PreparedStatement ps = con.prepareStatement(consulta);
+            ps.setString(1, bene.getCedula());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                idPersona = rs.getInt("id_persona");
+            }
+            ps.close();
+            
+            if (idPersona != -1) {
+                String consultaBeneficiario = "INSERT INTO beneficiario (id_persona) VALUES (?)";
+                PreparedStatement psb = con.prepareStatement(consultaBeneficiario);
+                psb.setInt(1, idPersona);
+                beneficiarioInsertado = psb.executeUpdate() > 0;
+                psb.close(); 
+            }
+            
+            if (personaActualizada && beneficiarioInsertado) {
+                insertar = true;
+            }
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return insertar;
+    }
+    
+    
+//METODO LOGICA INSERTAR HIJO
+    @Override
+    public boolean insertarBeneficiarioHijo(beneficiario bene) {
         boolean insertar = false;
         boolean personaInsertada = false;
         boolean beneficiarioInsertado = false;
 
         try {
             Connection con = this.iniciarConexion();
+            
+            //insertar datos en tabla persona
             String consultaPersona = "INSERT INTO public.persona "
                             + "(cedula, nombre, apellido, fecha_nacimiento, telefono, direccion, email, tipo) "
                             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
@@ -94,13 +154,14 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
                 idPersonaGenerado = generatedKeys.getInt(1);
             }
             psp.close();
-
+            
+            //insertar datos en tabla beneficiario
             if (idPersonaGenerado != -1) {
                 String consultaBeneficiario = "INSERT INTO beneficiario (id_persona) VALUES (?)";
                 PreparedStatement psb = con.prepareStatement(consultaBeneficiario);
                 psb.setInt(1, idPersonaGenerado);
                 beneficiarioInsertado = psb.executeUpdate() > 0;
-                psb.close(); // Cerrar PreparedStatement
+                psb.close(); 
             }
 
             if (personaInsertada && beneficiarioInsertado) {

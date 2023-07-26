@@ -6,6 +6,7 @@
 package idao;
 
 import java.util.ArrayList;
+import modelo.padre;
 
 /**
  *
@@ -13,4 +14,6 @@ import java.util.ArrayList;
  */
 public interface IPadre {
     public ArrayList<Object[]> consultarPadres();
+    
+    public boolean insertarPadre(padre pa);
 }

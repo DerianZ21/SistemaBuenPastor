@@ -244,9 +244,9 @@ public class vistaUsuarios extends javax.swing.JFrame {
     private void tbListaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbListaUsuariosMouseClicked
         controlador.seleccionarUsuarios(tbListaUsuarios, txtIDUsuarios, txtNombreUsuarios, txtApellidoUsuarios);
         if (tbListaUsuarios.getSelectedRow() != -1) {
-            btnInsertar.setEnabled(false);
-            } else {
             btnInsertar.setEnabled(true);
+            } else {
+            btnInsertar.setEnabled(false);
         }
     }//GEN-LAST:event_tbListaUsuariosMouseClicked
 

@@ -13,7 +13,8 @@ import modelo.beneficiario;
  * @author Asus
  */
 public interface IBeneficiario {
-    public boolean insertarBeneficiario(beneficiario bene);
+    public boolean insertarBeneficiarioPadres(beneficiario bene);
+    public boolean insertarBeneficiarioHijo(beneficiario bene);
     public boolean eliminarBeneficiario(beneficiario bene);
     public boolean modificarBeneficiario(beneficiario bene);
     public ArrayList<Object[]> consultarBeneficiario();
