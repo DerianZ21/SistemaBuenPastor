@@ -162,6 +162,8 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
                 idPersonaBeneGenerado = generatedKeysPersonaBene.getInt(1);
             }
             pspb.close();
+            
+            //verificar si los representantes ya existen
 
             //insertar datos en tabla persona para madre
             int idMadreGenerado=-1;
@@ -351,7 +353,8 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
     
 //METODO LOGICA validad Cedula ya existente
     public boolean verificarCedula(String paramCedula) {
-        String consulta = "SELECT * FROM persona;";
+        String consulta = "SELECT p.cedula FROM persona p " +
+                  "INNER JOIN beneficiario b ON p.id_persona = b.id_persona;";
         try (
             Connection con = this.iniciarConexion();
             Statement st = con.createStatement();
