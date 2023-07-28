@@ -27,7 +27,6 @@ modelo\madre.class
 vista\vistaUsuarios$5.class
 vista\vistaMenuPrincipal$3.class
 idao\IUsuario.class
-vista\vistaAgregarBeneficiario$5.class
 vista\vistaMenuPrincipal$1.class
 controlador\controladorAgregarBeneficiario.class
 vista\vistaBeneficiarios$3.class
