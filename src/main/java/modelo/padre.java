@@ -33,5 +33,4 @@ public class padre extends persona{
     public void setId_padre(int id_padre) {
         this.id_padre = id_padre;
     }
-    
 }

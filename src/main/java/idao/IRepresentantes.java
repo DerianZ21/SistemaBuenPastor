@@ -5,17 +5,12 @@
  */
 package idao;
 
-import java.util.ArrayList;
-import modelo.padre;
-
 /**
  *
  * @author Asus
  */
-public interface IPadre {
-    public ArrayList<Object[]> consultarPadres();
+public interface IRepresentantes {
+     
+    public int insertarRepresentantes(int pa, int ma); 
     
-    public boolean insertarBeneficiarioPadre(padre pa);
-    
-    public int insertarPadre(padre pa);
 }

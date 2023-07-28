@@ -247,6 +247,11 @@ public class vistaBeneficiarios extends javax.swing.JFrame {
         );
 
         jButton2.setText("EDITAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         btmAgregar.setText("AGREGAR");
         btmAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -329,12 +334,17 @@ public class vistaBeneficiarios extends javax.swing.JFrame {
     private void btmAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmAgregarActionPerformed
         vistaAgregarBeneficiario.elegirTipo();
         vistaAgregarBeneficiario.setVisible(true);
+        
     }//GEN-LAST:event_btmAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         controlador.eliminarBeneficiario();
         controlador.consultarBeneficiario(tblBeneficiario);
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

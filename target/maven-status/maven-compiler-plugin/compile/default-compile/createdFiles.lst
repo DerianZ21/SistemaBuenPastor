@@ -9,12 +9,15 @@ vista\vistaUsuarios$4.class
 com\mycompany\javacrudpostgres\JavaCRUDPostgres.class
 idao\IBeneficiario.class
 vista\vistaAgregarBeneficiario.class
+modelo\representantes.class
+vista\vistaBeneficiarios$4.class
 vista\vistaLogin.class
 vista\vistaUsuarios.class
 controlador\controladorLogin.class
 controlador\controladorUsuario.class
 vista\vistaMenuPrincipal.class
 vista\vistaUsuarios$2.class
+idao\IRepresentantes.class
 vista\vistaAgregarBeneficiario$2.class
 controlador\controladorBeneficiario.class
 modelo\beneficiario.class
@@ -24,9 +27,11 @@ modelo\madre.class
 vista\vistaUsuarios$5.class
 vista\vistaMenuPrincipal$3.class
 idao\IUsuario.class
+vista\vistaAgregarBeneficiario$5.class
 vista\vistaMenuPrincipal$1.class
 controlador\controladorAgregarBeneficiario.class
 vista\vistaBeneficiarios$3.class
+dao\daoRepresentantes.class
 vista\vistaBeneficiarios.class
 vista\vistaUsuarios$3.class
 conexion\conexion.class

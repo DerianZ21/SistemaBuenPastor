@@ -16,7 +16,7 @@ import modelo.padre;
  */
 public interface IBeneficiario {
     public boolean insertarBeneficiarioPadres(beneficiario bene);
-    public boolean insertarBeneficiarioHijo(beneficiario bene, padre pa, madre ma);
+    public boolean insertarBeneficiarioHijo(beneficiario bene, int repre);
     public boolean eliminarBeneficiario(beneficiario bene);
     public boolean modificarBeneficiario(beneficiario bene);
     public ArrayList<Object[]> consultarBeneficiario();

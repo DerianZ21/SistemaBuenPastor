@@ -13,5 +13,9 @@ import modelo.madre;
  */
 public interface IMadre {
     public ArrayList<Object[]> consultarMadres();
-    public boolean insertarMadre(madre ma);
+    
+    public boolean insertarBenficiarioMadre(madre ma);
+    
+    public int insertarMadre(madre ma);
+    
 }

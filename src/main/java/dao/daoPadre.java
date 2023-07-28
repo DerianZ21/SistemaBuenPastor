@@ -20,16 +20,29 @@ import modelo.padre;
  * @author Asus
  */
 public class daoPadre extends conexion implements IPadre{
-
     
     @Override
     public ArrayList<Object[]> consultarPadres() {
         ArrayList<Object[]> listPadres = new ArrayList<>();
         try {
-            
             Connection con = this.iniciarConexion();
+            
+            // Obtener la lista de id_persona de la tabla beneficiarios
+            String consultaBeneficiarios = "SELECT id_persona FROM beneficiario;";
+            Statement stBeneficiarios = con.createStatement();
+            ResultSet rsBeneficiarios = stBeneficiarios.executeQuery(consultaBeneficiarios);
+            ArrayList<String> idBeneficiarios = new ArrayList<>();
+            while (rsBeneficiarios.next()) {
+                int idPersona = rsBeneficiarios.getInt("id_persona");
+                idBeneficiarios.add(String.valueOf(idPersona)); // Convertir a cadena antes de agregar a la lista
+            }
+            rsBeneficiarios.close();
+            stBeneficiarios.close();
+
+            // Consulta para obtener las madres que no están en la tabla beneficiarios
             String consulta = "SELECT p.cedula, p.nombre, p.apellido FROM persona p " +
-                  "INNER JOIN padre pa ON p.id_persona = pa.id_persona;";
+                  "INNER JOIN padre m ON p.id_persona = m.id_persona " +
+                  "WHERE p.id_persona NOT IN (" + String.join(",", idBeneficiarios) + ");";
 
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(consulta);
@@ -53,7 +66,7 @@ public class daoPadre extends conexion implements IPadre{
     }
 
     @Override
-    public boolean insertarPadre(padre pa) {
+    public boolean insertarBeneficiarioPadre(padre pa) {
         boolean insertar = false;
         boolean personaInsertada = false;
         boolean padreInsertado = false;
@@ -93,5 +106,46 @@ public class daoPadre extends conexion implements IPadre{
             JOptionPane.showMessageDialog(null, "ERROR error dao madre inserta madre:"+e.toString());
         }
         return insertar;
+    }
+
+    @Override
+    public int insertarPadre(padre pa) {
+        Integer idPadreGenerado=-1;
+        try{
+            Connection con = this.iniciarConexion();
+            if(!"".equals(pa.getCedula())){
+                String consultaPersonaPadre = "insert into persona (cedula, nombre, apellido)  values(?, ?, ?);";
+                PreparedStatement pspp = con.prepareStatement(consultaPersonaPadre, Statement.RETURN_GENERATED_KEYS);
+                pspp.setString(1, pa.getCedula());
+                pspp.setString(2, pa.getNombre());
+                pspp.setString(3, pa.getApellido());
+
+                pspp.execute();
+                ResultSet generatedKeysPersonaPa = pspp.getGeneratedKeys();
+                int idPersonaPaGenerado = -1;
+                if (generatedKeysPersonaPa.next()) {
+                    idPersonaPaGenerado = generatedKeysPersonaPa.getInt(1);
+                }
+                pspp.close();
+
+                //insertar id persona en padre
+                if (idPersonaPaGenerado != -1) {
+                    String consultaPadre = "INSERT INTO padre (id_persona) VALUES (?)";
+                    PreparedStatement psp = con.prepareStatement(consultaPadre, Statement.RETURN_GENERATED_KEYS);
+                    psp.setInt(1, idPersonaPaGenerado);
+                    psp.execute();
+
+                    ResultSet generatedKeysPadre = psp.getGeneratedKeys();
+                    if (generatedKeysPadre.next()) {
+                        idPadreGenerado = generatedKeysPadre.getInt(1);
+                    }
+                    psp.close();
+                }
+            }
+            con.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "ERROR: " + e.toString());       
+        }
+        return idPadreGenerado;
     }
 }
