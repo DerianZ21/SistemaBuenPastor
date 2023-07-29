@@ -97,6 +97,7 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
             if (rs.next()) {
                 idPersona = rs.getInt("id_persona");
             }
+            rs.close();
             ps.close();
 
             if (idPersona != -1) {
@@ -152,6 +153,7 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
             if (generatedKeysPersonaBene.next()) {
                 idPersonaBeneGenerado = generatedKeysPersonaBene.getInt(1);
             }
+            generatedKeysPersonaBene.close();
             pspb.close();
 
             if (idPersonaBeneGenerado != -1&&repre!=-1) {
@@ -188,12 +190,11 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
             String consulta = "DELETE FROM persona where persona.cedula=?;";
             CallableStatement cs = con.prepareCall(consulta);
             cs.setString(1, bene.getCedula());
-
-            eliminar = cs.execute();
+            
+            
             cs.close();
             con.close();
-
-            JOptionPane.showMessageDialog(null, "Se eliminó correctamente");
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR:" + e.toString());
         }
@@ -203,9 +204,37 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
 
 //METODO LOGICA MODIFICAR
     @Override
-    public boolean modificarBeneficiario(beneficiario bene) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean modificarBeneficiario(beneficiario bene, String cedula) {
+        boolean modificar = false;
+        try {
+            if(!"".equals(cedula)){
+                Connection con = this.iniciarConexion();
+
+                String consultaActualizarBene = "UPDATE persona set cedula = ?, nombre = ?, apellido = ?, "
+                        + "telefono = ?, direccion = ?, email = ?, "
+                        + "where cedula = ?;";
+                CallableStatement csb = con.prepareCall(consultaActualizarBene);
+
+                csb.setString(1, bene.getCedula());
+                csb.setString(2, bene.getNombre());
+                csb.setString(3, bene.getApellido());
+                csb.setString(5, bene.getTelefono());
+                csb.setString(6, bene.getDireccion());
+                csb.setString(7, bene.getEmail());
+                csb.setString(9, cedula);
+
+                modificar = csb.execute();
+                csb.close();
+                con.close();
+                JOptionPane.showMessageDialog(null, "Se modificó correctamente");
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR:" + e.toString());
+        }
+        return modificar;
     }
+
 
 //METODO LOGICA validad Cedula ya existente
     public boolean verificarCedula(String paramCedula) {
@@ -230,6 +259,4 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
         }
         return false;
     }
-
-    
 }

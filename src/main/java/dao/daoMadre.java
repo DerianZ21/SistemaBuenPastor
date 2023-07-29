@@ -7,7 +7,6 @@ package dao;
 
 import conexion.conexion;
 import idao.IMadre;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -86,6 +85,7 @@ public class daoMadre extends conexion implements IMadre{
             if (generatedKeys.next()) {
                 idPersonaGenerado = generatedKeys.getInt(1);
             }
+            generatedKeys.close();
             ps.close();
             
             //insertar id persona en madre
@@ -127,6 +127,7 @@ public class daoMadre extends conexion implements IMadre{
                 if (generatedKeysPersonaMa.next()) {
                     idPersonaMaGenerado = generatedKeysPersonaMa.getInt(1);
                 }
+                generatedKeysPersonaMa.close();
                 pspm.close();
 
                 //insertar id persona en madre
@@ -140,6 +141,7 @@ public class daoMadre extends conexion implements IMadre{
                     if (generatedKeysMadre.next()) {
                         idMadreGenerado = generatedKeysMadre.getInt(1);
                     }
+                    generatedKeysMadre.close();
                     psm.close();
                 }
             }

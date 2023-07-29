@@ -107,6 +107,10 @@ public class daoRepresentantes extends conexion implements IRepresentantes {
                         madreExiste = true;
                     }
                 }
+                stp.close();
+                rsp.close();
+                stm.close();
+                rsm.close();
                 return madreExiste && padreExiste;
             }
             //validar existencia solo de la cedula de la madre 
@@ -120,6 +124,8 @@ public class daoRepresentantes extends conexion implements IRepresentantes {
                         madreExiste = true;
                     }
                 }
+                stm.close();
+                rsm.close();
                 return madreExiste;
             }
             //validar existencia solo de la cedula del padre
@@ -133,6 +139,8 @@ public class daoRepresentantes extends conexion implements IRepresentantes {
                         padreExiste = true;
                     }
                 }
+                stp.close();
+                rsp.close();
                 return padreExiste;
             }
             
@@ -171,6 +179,9 @@ public class daoRepresentantes extends conexion implements IRepresentantes {
                 if (rsp.next()) {
                     idPadre = rsp.getInt("id_padre");
                 }
+                rsp.close();
+                psp.close();
+                
             }
             
             if(!"".equals(cedMadre)){
@@ -181,17 +192,21 @@ public class daoRepresentantes extends conexion implements IRepresentantes {
                 if (rsm.next()) {
                     idMadre = rsm.getInt("id_madre");
                 }
+                psm.close();
+                rsm.close();
             }
             
             if(idMadre>0 && idPadre>0){
-               PreparedStatement psr = con.prepareStatement(consultaIdRepresentantes);
-                psr.setInt(1, idPadre);
-                psr.setInt(2, idMadre);
-                ResultSet rsr = psr.executeQuery();
+               PreparedStatement ps = con.prepareStatement(consultaIdRepresentantes);
+                ps.setInt(1, idPadre);
+                ps.setInt(2, idMadre);
+                ResultSet rs = ps.executeQuery();
 
-                if(rsr.next()){
-                    idRepresentante = rsr.getInt("id_representantes");
+                if(rs.next()){
+                    idRepresentante = rs.getInt("id_representantes");
                 } 
+                ps.close();
+                rs.close();          
             }
             
             con.close();

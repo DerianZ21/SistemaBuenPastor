@@ -8,6 +8,7 @@ package vista;
 
 import controlador.controladorBeneficiario;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -17,6 +18,8 @@ import javax.swing.JTable;
 public class vistaBeneficiarios extends javax.swing.JFrame {
     controladorBeneficiario controlador = new controladorBeneficiario(this);
     vistaAgregarBeneficiario vistaAgregarBeneficiario = new vistaAgregarBeneficiario();
+    vistaModificarBeneficiario vistaModificarBeneficiario = new vistaModificarBeneficiario();
+    
     /**
      * Creates new form vistaBeneficiarios
      */
@@ -24,6 +27,19 @@ public class vistaBeneficiarios extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         controlador.consultarBeneficiario(tblBeneficiario);
+    }
+    
+    public String seleccionarCedula(){
+        String cedulaTexto = "";
+        int filaSeleccionada = this.getTblBeneficiario().getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int indiceCedula = 0;
+
+        cedulaTexto = (String) this.getTblBeneficiario().getValueAt(filaSeleccionada, indiceCedula);
+        }
+        return cedulaTexto;
     }
 
     /**
@@ -343,7 +359,8 @@ public class vistaBeneficiarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        vistaModificarBeneficiario.setVisible(true);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

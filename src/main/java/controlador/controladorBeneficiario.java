@@ -52,18 +52,14 @@ public class controladorBeneficiario {
 //MEDOTO controlador funcion ELIMINAR
     public void eliminarBeneficiario() {
         try {
-            int filaSeleccionada = vistaBeneficiarios.getTblBeneficiario().getSelectedRow();
-            if (filaSeleccionada == -1) {
-                JOptionPane.showMessageDialog(vistaBeneficiarios, "Por favor, seleccione un usuario.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else {
-                int indiceCedula = 0;
-
-                String cedulaTexto = (String) vistaBeneficiarios.getTblBeneficiario().getValueAt(filaSeleccionada, indiceCedula);
-
+            String cedulaTexto = vistaBeneficiarios.seleccionarCedula();
+            
+            if(!"".equals(cedulaTexto)){
                 bene.setCedula(cedulaTexto);
                 dao.eliminarBeneficiario(bene);
-
+                JOptionPane.showMessageDialog(null, "Se insertó correctamente");
             }
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(vistaBeneficiarios, "ERROR: " + e.toString());
         }

@@ -29,15 +29,15 @@ public class daoPadre extends conexion implements IPadre{
             
             // Obtener la lista de id_persona de la tabla beneficiarios
             String consultaBeneficiarios = "SELECT id_persona FROM beneficiario;";
-            Statement stBeneficiarios = con.createStatement();
-            ResultSet rsBeneficiarios = stBeneficiarios.executeQuery(consultaBeneficiarios);
+            Statement stb = con.createStatement();
+            ResultSet rsb = stb.executeQuery(consultaBeneficiarios);
             ArrayList<String> idBeneficiarios = new ArrayList<>();
-            while (rsBeneficiarios.next()) {
-                int idPersona = rsBeneficiarios.getInt("id_persona");
+            while (rsb.next()) {
+                int idPersona = rsb.getInt("id_persona");
                 idBeneficiarios.add(String.valueOf(idPersona)); // Convertir a cadena antes de agregar a la lista
             }
-            rsBeneficiarios.close();
-            stBeneficiarios.close();
+            rsb.close();
+            stb.close();
 
             // Consulta para obtener las madres que no están en la tabla beneficiarios
             String consulta = "SELECT p.cedula, p.nombre, p.apellido FROM persona p " +
@@ -86,12 +86,13 @@ public class daoPadre extends conexion implements IPadre{
             if (generatedKeys.next()) {
                 idPersonaGenerado = generatedKeys.getInt(1);
             }
+            generatedKeys.close();
             ps.close();
             
             //insertar id persona en madre
             if (idPersonaGenerado != -1) {
-                String consultaMadre = "INSERT INTO padre (id_persona) VALUES (?)";
-                PreparedStatement pspa = con.prepareStatement(consultaMadre);
+                String consultaPadre = "INSERT INTO padre (id_persona) VALUES (?)";
+                PreparedStatement pspa = con.prepareStatement(consultaPadre);
                 pspa.setInt(1, idPersonaGenerado);
                 padreInsertado = pspa.executeUpdate() > 0;
                 pspa.close(); 
@@ -126,6 +127,7 @@ public class daoPadre extends conexion implements IPadre{
                 if (generatedKeysPersonaPa.next()) {
                     idPersonaPaGenerado = generatedKeysPersonaPa.getInt(1);
                 }
+                generatedKeysPersonaPa.close();
                 pspp.close();
 
                 //insertar id persona en padre
@@ -139,6 +141,7 @@ public class daoPadre extends conexion implements IPadre{
                     if (generatedKeysPadre.next()) {
                         idPadreGenerado = generatedKeysPadre.getInt(1);
                     }
+                    generatedKeysPadre.close();
                     psp.close();
                 }
             }
