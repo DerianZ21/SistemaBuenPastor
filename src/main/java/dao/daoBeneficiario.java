@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 import modelo.beneficiario;
 import modelo.madre;
@@ -183,16 +184,68 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
 
 //METODO LOGICA ELIMINAR
     @Override
-    public boolean eliminarBeneficiario(beneficiario bene) {
+    public boolean eliminarBeneficiario(String cedula) {
         boolean eliminar = false;
+        String nulo = "";
+        
         try {
             Connection con = this.iniciarConexion();
-            String consulta = "DELETE FROM persona where persona.cedula=?;";
-            CallableStatement cs = con.prepareCall(consulta);
-            cs.setString(1, bene.getCedula());
+           
+            String consultaTipo = "SELECT tipo FROM persona WHERE cedula = ?;";
+            
+            PreparedStatement pst = con.prepareStatement(consultaTipo);
+            pst.setString(1, cedula);
+            ResultSet rst = pst.executeQuery();
+            String tipo = "";
+            
+            if (rst.next()) {
+                tipo = rst.getString("tipo");
+            }
+            pst.close();
+            rst.close();
+            
+            String consultaId = "SELECT id_persona FROM persona WHERE cedula = ?;";
+            
+            PreparedStatement psi = con.prepareStatement(consultaId);
+            psi.setString(1, cedula);
+            ResultSet rsi = psi.executeQuery();
+            int idPersona = -1;
+            
+            if (rsi.next()) {
+                idPersona = rsi.getInt("id_persona");
+            }
+            psi.close();
+            rsi.close();
             
             
-            cs.close();
+            if("Hijo".equals(tipo)){
+                String consultaEliminar = "DELETE FROM persona where persona.cedula=?;";
+                CallableStatement cs = con.prepareCall(consultaEliminar);
+                cs.setString(1, cedula);
+                eliminar = cs.execute();
+
+                cs.close();
+            }else{
+                String consultaActualizar = "INSERT INTO public.persona(\n" +
+                                        "fecha_nacimiento, telefono, direccion, email, tipo)\n" +
+                                        "VALUES (  ?, ?, ?, ?, ?);";
+                PreparedStatement psb = con.prepareStatement(consultaActualizar);
+                psb.setDate(1, null);
+                psb.setString(2, nulo);
+                psb.setString(3, nulo);
+                psb.setString(4, nulo);
+                psb.setString(5, nulo);
+                
+                psb.execute();
+                psb.close();
+                
+                String consultaEliminar = "DELETE FROM beneficiario where id_persona = ?;";
+                CallableStatement cs = con.prepareCall(consultaEliminar);
+                cs.setInt(1, idPersona);
+                eliminar = cs.execute();
+            }
+            
+            
             con.close();
             
         } catch (Exception e) {
@@ -211,17 +264,17 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
                 Connection con = this.iniciarConexion();
 
                 String consultaActualizarBene = "UPDATE persona set cedula = ?, nombre = ?, apellido = ?, "
-                        + "telefono = ?, direccion = ?, email = ?, "
+                        + "telefono = ?, direccion = ?, email = ? "
                         + "where cedula = ?;";
                 CallableStatement csb = con.prepareCall(consultaActualizarBene);
 
                 csb.setString(1, bene.getCedula());
                 csb.setString(2, bene.getNombre());
                 csb.setString(3, bene.getApellido());
-                csb.setString(5, bene.getTelefono());
-                csb.setString(6, bene.getDireccion());
-                csb.setString(7, bene.getEmail());
-                csb.setString(9, cedula);
+                csb.setString(4, bene.getTelefono());
+                csb.setString(5, bene.getDireccion());
+                csb.setString(6, bene.getEmail());
+                csb.setString(7, cedula);
 
                 modificar = csb.execute();
                 csb.close();
@@ -258,5 +311,41 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
             JOptionPane.showMessageDialog(null, "Error dao beneficiario validacion de Cedula:" + e.toString());
         }
         return false;
+    }
+    
+    
+    @Override
+    public List<Object[]> obtenerDatos(String cedulaBuscada) {
+        List<Object[]> datosPersona = new ArrayList<>();
+
+        try {
+            Connection con = this.iniciarConexion();
+            String consulta = "SELECT cedula, nombre, apellido, telefono, direccion, email FROM persona WHERE cedula = ?";
+            PreparedStatement pst = con.prepareStatement(consulta);
+            pst.setString(1, cedulaBuscada);
+
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String cedula = rs.getString("cedula");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String telefono = rs.getString("telefono");
+                String direccion = rs.getString("direccion");
+                String email = rs.getString("email");
+
+                // Crear un array con los datos y agregarlo a la lista
+                Object[] datos = {cedula, nombre, apellido, telefono, direccion, email};
+                datosPersona.add(datos);
+            }
+
+            // Cerrar recursos
+            rs.close();
+            pst.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return datosPersona;
     }
 }

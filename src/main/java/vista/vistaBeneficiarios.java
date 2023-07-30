@@ -7,15 +7,18 @@ package vista;
 
 
 import controlador.controladorBeneficiario;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import idao.IObserver;
 
 /**
  *
  * @author Asus
  */
-public class vistaBeneficiarios extends javax.swing.JFrame {
+public class vistaBeneficiarios extends javax.swing.JFrame implements IObserver{
     controladorBeneficiario controlador = new controladorBeneficiario(this);
     vistaAgregarBeneficiario vistaAgregarBeneficiario = new vistaAgregarBeneficiario();
     vistaModificarBeneficiario vistaModificarBeneficiario = new vistaModificarBeneficiario();
@@ -27,8 +30,18 @@ public class vistaBeneficiarios extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         controlador.consultarBeneficiario(tblBeneficiario);
+        
+        //se obtiene observadores de cambio
+        vistaModificarBeneficiario.addObserver(this);
     }
     
+    //llamada de metodo para consultar y lenar la tabla de beneficiarios en caso de cambios
+    @Override
+    public void ActualizarBeneficiario() {
+        controlador.consultarBeneficiario(tblBeneficiario);
+    }
+    
+    //Metodo para seleccionar un beneficiario por cedula
     public String seleccionarCedula(){
         String cedulaTexto = "";
         int filaSeleccionada = this.getTblBeneficiario().getSelectedRow();
@@ -37,8 +50,9 @@ public class vistaBeneficiarios extends javax.swing.JFrame {
         } else {
             int indiceCedula = 0;
 
-        cedulaTexto = (String) this.getTblBeneficiario().getValueAt(filaSeleccionada, indiceCedula);
+            cedulaTexto = (String) this.getTblBeneficiario().getValueAt(filaSeleccionada, indiceCedula);
         }
+        System.out.println("numero de cedula seleccionada"+cedulaTexto);
         return cedulaTexto;
     }
 
@@ -74,7 +88,7 @@ public class vistaBeneficiarios extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel4 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        btnEditarBeneficiario = new javax.swing.JButton();
         btmAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
 
@@ -262,10 +276,10 @@ public class vistaBeneficiarios extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton2.setText("EDITAR");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarBeneficiario.setText("EDITAR");
+        btnEditarBeneficiario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnEditarBeneficiarioActionPerformed(evt);
             }
         });
 
@@ -291,7 +305,7 @@ public class vistaBeneficiarios extends javax.swing.JFrame {
                 .addGap(110, 110, 110)
                 .addComponent(btmAgregar)
                 .addGap(163, 163, 163)
-                .addComponent(jButton2)
+                .addComponent(btnEditarBeneficiario)
                 .addGap(163, 163, 163)
                 .addComponent(btnEliminar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -301,7 +315,7 @@ public class vistaBeneficiarios extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                    .addComponent(btnEditarBeneficiario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btmAgregar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -350,7 +364,6 @@ public class vistaBeneficiarios extends javax.swing.JFrame {
     private void btmAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmAgregarActionPerformed
         vistaAgregarBeneficiario.elegirTipo();
         vistaAgregarBeneficiario.setVisible(true);
-        
     }//GEN-LAST:event_btmAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -358,10 +371,14 @@ public class vistaBeneficiarios extends javax.swing.JFrame {
         controlador.consultarBeneficiario(tblBeneficiario);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        vistaModificarBeneficiario.setVisible(true);
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnEditarBeneficiarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarBeneficiarioActionPerformed
+        String cedulaActual = seleccionarCedula();
+        if(!"".equals(cedulaActual)){
+            controlador.llenarCamposModificar(vistaModificarBeneficiario.getTxtCedula(),vistaModificarBeneficiario.getTxtNombre(),vistaModificarBeneficiario.getTxtApellido(), vistaModificarBeneficiario.getTxtTelefono(), vistaModificarBeneficiario.getTxtDireccion(), vistaModificarBeneficiario.getTxtEmail());
+            vistaModificarBeneficiario.setVisible(true);
+            vistaModificarBeneficiario.setCedulaSeleccionada(cedulaActual);
+        }
+    }//GEN-LAST:event_btnEditarBeneficiarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -400,9 +417,9 @@ public class vistaBeneficiarios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btmAgregar;
+    private javax.swing.JButton btnEditarBeneficiario;
     private javax.swing.JButton btnEliminar;
     private java.awt.Button button2;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -434,4 +451,7 @@ public class vistaBeneficiarios extends javax.swing.JFrame {
     public void setTblBeneficiario(JTable tblBeneficiario) {
         this.tblBeneficiario = tblBeneficiario;
     }
+
+   
+    
 }

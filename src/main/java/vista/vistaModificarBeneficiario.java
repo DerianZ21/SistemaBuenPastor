@@ -6,23 +6,46 @@
 package vista;
 
 import controlador.controladorModificarBeneficiario;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JTextField;
+import idao.IObserver;
 
 /**
  *
  * @author Asus
  */
 public class vistaModificarBeneficiario extends javax.swing.JFrame {
-    
+
     controladorModificarBeneficiario controladorModificarBeneficiario = new controladorModificarBeneficiario(this);
 
+    
+    //identificar cedula del beneficiario seleccionada
+    String cedulaSeleccionada;
 
-    /**
-     * Creates new form vistaModificarBeneficiario
-     */
     public vistaModificarBeneficiario() {
         initComponents();
     }
+
+    public void setCedulaSeleccionada(String cedulaSeleccionada) {
+        this.cedulaSeleccionada = cedulaSeleccionada;
+    }
+    
+    
+    //guarda notificación de cambios, si se presionó el boton de actualizar beneficairio
+    private List<IObserver> observers = new ArrayList<>();
+
+    public void addObserver(IObserver observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObservers() {
+        for (IObserver observer : observers) {
+            observer.ActualizarBeneficiario();
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,19 +71,13 @@ public class vistaModificarBeneficiario extends javax.swing.JFrame {
         txtDireccion = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setBackground(new java.awt.Color(204, 255, 255));
 
         jLabel1.setText("Cedula:");
-
-        txtCedula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCedulaActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Nombre:");
 
@@ -86,14 +103,14 @@ public class vistaModificarBeneficiario extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel7))
                 .addGap(47, 47, 47)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtEmail)
                     .addComponent(txtDireccion)
                     .addComponent(txtTelefono)
-                    .addComponent(txtApellido)
+                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNombre)
-                    .addComponent(txtCedula))
-                .addContainerGap(179, Short.MAX_VALUE))
+                    .addComponent(txtApellido))
+                .addGap(116, 116, 116))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,10 +144,10 @@ public class vistaModificarBeneficiario extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 255));
 
-        jButton1.setText("ACTUALIZAR");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setText("ACTUALIZAR");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
 
@@ -140,14 +157,14 @@ public class vistaModificarBeneficiario extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(218, 218, 218)
-                .addComponent(jButton1)
+                .addComponent(btnActualizar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(39, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnActualizar)
                 .addGap(26, 26, 26))
         );
 
@@ -180,19 +197,12 @@ public class vistaModificarBeneficiario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
-        
-    }//GEN-LAST:event_txtCedulaActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        
-        
-        
-        
-        
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        System.out.println(txtCedula.getText());
+        controladorModificarBeneficiario.modificarBeneficiario(cedulaSeleccionada);
+        //notifica si se precionó
+        notifyObservers();
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -230,7 +240,7 @@ public class vistaModificarBeneficiario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -272,8 +282,6 @@ public class vistaModificarBeneficiario extends javax.swing.JFrame {
         this.txtDireccion = txtDireccion;
     }
 
-    
-
     public JTextField getTxtEmail() {
         return txtEmail;
     }
@@ -298,4 +306,11 @@ public class vistaModificarBeneficiario extends javax.swing.JFrame {
         this.txtTelefono = txtTelefono;
     }
 
+    public JButton getBtnActualizar() {
+        return btnActualizar;
+    }
+
+    public void setBtnActualizar(JButton btnActualizar) {
+        this.btnActualizar = btnActualizar;
+    }
 }

@@ -346,7 +346,7 @@
                       <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
                       <Component id="btmAgregar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="163" max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnEditarBeneficiario" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="163" max="-2" attributes="0"/>
                       <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -358,7 +358,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButton2" alignment="1" pref="70" max="32767" attributes="0"/>
+                          <Component id="btnEditarBeneficiario" alignment="1" pref="70" max="32767" attributes="0"/>
                           <Component id="btnEliminar" alignment="1" max="32767" attributes="0"/>
                           <Component id="btmAgregar" alignment="1" max="32767" attributes="0"/>
                       </Group>
@@ -368,12 +368,12 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="btnEditarBeneficiario">
               <Properties>
                 <Property name="text" type="java.lang.String" value="EDITAR"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarBeneficiarioActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btmAgregar">

@@ -7,6 +7,7 @@ vista\vistaAgregarBeneficiario$4.class
 vista\vistaUsuarios$4.class
 com\mycompany\javacrudpostgres\JavaCRUDPostgres.class
 vista\vistaModificarBeneficiario.class
+idao\IObserver.class
 vista\vistaBeneficiarios$4.class
 vista\vistaLogin.class
 controlador\controladorUsuario.class
@@ -14,7 +15,6 @@ vista\vistaMenuPrincipal.class
 idao\IRepresentantes.class
 controlador\controladorBeneficiario.class
 dao\daoPadre.class
-vista\vistaModificarBeneficiario$3.class
 vista\vistaMenuPrincipal$3.class
 idao\IUsuario.class
 vista\vistaBeneficiarios$3.class

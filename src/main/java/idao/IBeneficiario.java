@@ -6,9 +6,8 @@
 package idao;
 
 import java.util.ArrayList;
+import java.util.List;
 import modelo.beneficiario;
-import modelo.madre;
-import modelo.padre;
 
 /**
  *
@@ -17,7 +16,8 @@ import modelo.padre;
 public interface IBeneficiario {
     public boolean insertarBeneficiarioPadres(beneficiario bene);
     public boolean insertarBeneficiarioHijo(beneficiario bene, int repre);
-    public boolean eliminarBeneficiario(beneficiario bene);
+    public boolean eliminarBeneficiario(String cedula);
     public boolean modificarBeneficiario(beneficiario bene, String ced);
     public ArrayList<Object[]> consultarBeneficiario();
+    public List<Object[]> obtenerDatos(String cedulaBuscada);
 }
