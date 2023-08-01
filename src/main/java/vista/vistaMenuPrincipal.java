@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 public class vistaMenuPrincipal extends javax.swing.JFrame {
     vistaUsuarios vistaUsuarios = new vistaUsuarios();
     vistaBeneficiarios vistaBeneficiarios = new vistaBeneficiarios();
+    vistaMenuMantenedores vistaMantenedores = new vistaMenuMantenedores();
     /**
      * Creates new form vistaMenuPrincipal
      */
@@ -32,7 +33,7 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         btnUsuarios = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnMantenedores = new javax.swing.JButton();
         btnBeneficiarios = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
@@ -45,7 +46,12 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Mantenedores");
+        btnMantenedores.setText("Mantenedores");
+        btnMantenedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMantenedoresActionPerformed(evt);
+            }
+        });
 
         btnBeneficiarios.setText("Beneficiarios");
         btnBeneficiarios.addActionListener(new java.awt.event.ActionListener() {
@@ -67,7 +73,7 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
                     .addComponent(btnUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(99, 99, 99)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMantenedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(152, Short.MAX_VALUE))
         );
@@ -77,7 +83,7 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
                 .addGap(220, 220, 220)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUsuarios)
-                    .addComponent(jButton2))
+                    .addComponent(btnMantenedores))
                 .addGap(145, 145, 145)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBeneficiarios)
@@ -96,6 +102,11 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
         vistaUsuarios.setVisible(true);
     }//GEN-LAST:event_btnUsuariosActionPerformed
+
+    private void btnMantenedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenedoresActionPerformed
+        vistaMantenedores.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnMantenedoresActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,8 +145,8 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBeneficiarios;
+    private javax.swing.JButton btnMantenedores;
     private javax.swing.JButton btnUsuarios;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     // End of variables declaration//GEN-END:variables
 }
