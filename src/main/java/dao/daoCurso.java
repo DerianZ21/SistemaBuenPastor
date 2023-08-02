@@ -22,7 +22,7 @@ public class daoCurso extends conexion implements ICurso{
     @Override
     public boolean insertarCurso(curso cu) {
         boolean insertar = false;
-        String consulta = "INSERT INTO cursos(\n" +
+        String consulta = "INSERT INTO curso(\n" +
                         " nombre_curso, tipo_beneficiario)\n" +
                         " VALUES (?, ?);";
         try {
