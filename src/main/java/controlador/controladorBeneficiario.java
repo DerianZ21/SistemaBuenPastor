@@ -85,4 +85,19 @@ public class controladorBeneficiario {
             email.setText((String) primeraFila[5]);
         }
     }
+    
+    
+//metodo para llenar los campos nombre y apellido
+    public void llenarCamposModificar(JTextField nombreApellido) {
+        
+        String cedulaActual = vistaBeneficiarios.seleccionarCedula();
+        if(!"".equals(cedulaActual)){
+            List<Object[]> datos = daoBeneficiario.obtenerNombreApellido(cedulaActual);
+
+            Object[] primeraFila = datos.get(0);
+            nombreApellido.setText((String) primeraFila[0]+" "+primeraFila[1]);
+        }
+    }
+    
+    
 }

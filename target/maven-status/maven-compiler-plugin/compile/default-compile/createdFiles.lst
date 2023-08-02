@@ -3,11 +3,13 @@ vista\vistaMenuPrincipal$2.class
 dao\daoUsuario.class
 controlador\controladorModificarBeneficiario.class
 idao\IPadre.class
+modelo\asignacionCurso.class
 vista\vistaAgregarBeneficiario$4.class
 vista\vistaUsuarios$4.class
 com\mycompany\javacrudpostgres\JavaCRUDPostgres.class
 vista\vistaModificarBeneficiario.class
 idao\IObserver.class
+vista\vistaAsignarCurso$1.class
 vista\vistaBeneficiarios$4.class
 vista\vistaLogin.class
 vista\vistaMenuMantenedores$2.class
@@ -23,6 +25,7 @@ vista\vistaAgregarCurso$1.class
 idao\IUsuario.class
 vista\vistaBeneficiarios$3.class
 dao\daoRepresentantes.class
+vista\vistaAsignarCurso$2.class
 vista\vistaUsuarios$3.class
 conexion\conexion.class
 dao\daoBeneficiario.class
@@ -37,6 +40,8 @@ vista\vistaAgregarBeneficiario.class
 modelo\representantes.class
 vista\vistaUsuarios.class
 controlador\controladorLogin.class
+vista\vistaAsignarCurso.class
+vista\vistaBeneficiarios$5.class
 vista\vistaUsuarios$2.class
 vista\vistaAgregarBeneficiario$2.class
 vista\vistaMenuMantenedores$1.class

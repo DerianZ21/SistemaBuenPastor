@@ -22,7 +22,7 @@ public class vistaBeneficiarios extends javax.swing.JFrame implements IObserver{
     controladorBeneficiario controlador = new controladorBeneficiario(this);
     vistaAgregarBeneficiario vistaAgregarBeneficiario = new vistaAgregarBeneficiario();
     vistaModificarBeneficiario vistaModificarBeneficiario = new vistaModificarBeneficiario();
-    
+    vistaAsignarCurso vistaAsignarCurso = new vistaAsignarCurso();
     /**
      * Creates new form vistaBeneficiarios
      */
@@ -244,6 +244,11 @@ public class vistaBeneficiarios extends javax.swing.JFrame implements IObserver{
         jButton6.setText("Exportar EXCEL");
 
         jButton4.setText("ASIGNAR CURSO");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Exportar PDF");
 
@@ -379,6 +384,15 @@ public class vistaBeneficiarios extends javax.swing.JFrame implements IObserver{
             vistaModificarBeneficiario.setCedulaSeleccionada(cedulaActual);
         }
     }//GEN-LAST:event_btnEditarBeneficiarioActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String cedulaActual = seleccionarCedula();
+        if(!"".equals(cedulaActual)){
+            controlador.llenarCamposModificar(vistaAsignarCurso.getTxtNombreApellido());
+            vistaAsignarCurso.setVisible(true);
+            vistaModificarBeneficiario.setCedulaSeleccionada(cedulaActual);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

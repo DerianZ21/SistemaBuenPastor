@@ -344,8 +344,38 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
             pst.close();
             con.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error dao beneficiario obtener datos:" + e.toString());
         }
         return datosPersona;
+    }
+
+    @Override
+    public List<Object[]> obtenerNombreApellido(String cedulaBuscada) {
+        List<Object[]> nombreApellido = new ArrayList<>();
+
+        try {
+            Connection con = this.iniciarConexion();
+            String consulta = "SELECT nombre, apellido FROM persona WHERE cedula = ?";
+            PreparedStatement pst = con.prepareStatement(consulta);
+            pst.setString(1, cedulaBuscada);
+
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+
+                Object[] datos = {nombre, apellido};
+                nombreApellido.add(datos);
+            }
+
+            // Cerrar recursos
+            rs.close();
+            pst.close();
+            con.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error dao beneficiario obtener nombre y apellido:" + e.toString());
+        }
+        return nombreApellido;
     }
 }

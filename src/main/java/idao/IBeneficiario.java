@@ -20,4 +20,5 @@ public interface IBeneficiario {
     public boolean modificarBeneficiario(beneficiario bene, String ced);
     public ArrayList<Object[]> consultarBeneficiario();
     public List<Object[]> obtenerDatos(String cedulaBuscada);
+    public List<Object[]> obtenerNombreApellido(String cedulaBuscada);
 }
