@@ -20,7 +20,8 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
      */
     public vistaMenuPrincipal() {
         initComponents();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setLocationRelativeTo(null);
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -32,63 +33,77 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         btnUsuarios = new javax.swing.JButton();
-        btnMantenedores = new javax.swing.JButton();
         btnBeneficiarios = new javax.swing.JButton();
+        btnMantenedores = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnUsuarios.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 22)); // NOI18N
+        btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/DatosUsuarios.png"))); // NOI18N
         btnUsuarios.setText("Datos Usuario");
+        btnUsuarios.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnUsuarios.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUsuariosActionPerformed(evt);
             }
         });
+        jPanel1.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 280, 300));
 
-        btnMantenedores.setText("Mantenedores");
-        btnMantenedores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMantenedoresActionPerformed(evt);
-            }
-        });
-
+        btnBeneficiarios.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 22)); // NOI18N
+        btnBeneficiarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Beneficiario.png"))); // NOI18N
         btnBeneficiarios.setText("Beneficiarios");
+        btnBeneficiarios.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBeneficiarios.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnBeneficiarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBeneficiariosActionPerformed(evt);
             }
         });
+        jPanel1.add(btnBeneficiarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, 280, 290));
 
+        btnMantenedores.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 22)); // NOI18N
+        btnMantenedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Mantenedor.png"))); // NOI18N
+        btnMantenedores.setText("Mantenedores");
+        btnMantenedores.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnMantenedores.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnMantenedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMantenedoresActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnMantenedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, 280, 300));
+
+        jButton4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 22)); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Registro.png"))); // NOI18N
         jButton4.setText("Asistencia");
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 350, 280, 290));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoMenu.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -30, -1, 730));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(144, 144, 144)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnBeneficiarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(99, 99, 99)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnMantenedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(152, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(220, 220, 220)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnUsuarios)
-                    .addComponent(btnMantenedores))
-                .addGap(145, 145, 145)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBeneficiarios)
-                    .addComponent(jButton4))
-                .addContainerGap(72, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -107,6 +122,10 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
         vistaMantenedores.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnMantenedoresActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,5 +167,7 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnMantenedores;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

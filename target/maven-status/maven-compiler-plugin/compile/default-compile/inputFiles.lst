@@ -35,4 +35,7 @@ C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\control
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\idao\ICurso.java
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\controlador\controladorModificarBeneficiario.java
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\dao\daoPadre.java
+C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\controlador\controladorAsignarCurso.java
+C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\dao\daoAsignacionCurso.java
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\controlador\controladorLogin.java
+C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\idao\IAsignacionCurso.java

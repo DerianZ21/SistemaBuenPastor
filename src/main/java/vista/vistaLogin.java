@@ -104,9 +104,9 @@ public class vistaLogin extends javax.swing.JFrame{
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoBlanco1.png"))); // NOI18N
         jLabel6.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jLabel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0), new java.awt.Color(0, 0, 0)));
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 690));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 610));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 550, 690));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, 550, 610));
 
         imagenLogin.setForeground(new java.awt.Color(255, 255, 255));
         imagenLogin.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);

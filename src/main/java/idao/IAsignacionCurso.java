@@ -5,15 +5,12 @@
  */
 package idao;
 
-import java.util.ArrayList;
-import modelo.curso;
+import modelo.asignacionCurso;
 
 /**
  *
  * @author Asus
  */
-public interface ICurso {
-    
-    public boolean insertarCurso(curso cu);
-    public ArrayList<Object[]> consultarCursos(String tipoBene);
+public interface IAsignacionCurso {
+    public boolean insertarAsignacionCurso(asignacionCurso asigCur);
 }

@@ -9,7 +9,9 @@ import conexion.conexion;
 import idao.ICurso;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.curso;
 
@@ -35,13 +37,56 @@ public class daoCurso extends conexion implements ICurso{
             insertar = psc.execute();
             
             
-            
+            psc.close();
+            con.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR insertar curso: " + e.toString());
-
         }
         return insertar;
+    }
+
+    @Override
+    public ArrayList<Object[]> consultarCursos(String tipoBeneficiario) {
+        ArrayList<Object[]> listCursos = new ArrayList<>();
         
+        String consultaTipoHijo = "SELECT id_curso, nombre_curso FROM curso where tipo_beneficiario = 'Hijo';";
+        String consultaTipoRepresentante = "SELECT id_curso, nombre_curso FROM curso where tipo_beneficiario = 'Representante';";
+        try {
+            Connection con = this.iniciarConexion();
+            
+            if("Hijo".equals(tipoBeneficiario)){
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery(consultaTipoHijo);
+
+                while (rs.next()) {
+                    int idCurso = rs.getInt("id_curso");
+                    String nombreCurso = rs.getString("nombre_curso");
+
+                    Object[] row = {idCurso,nombreCurso};
+                    listCursos.add(row);
+                }
+                rs.close();
+                st.close();
+            }else{
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery(consultaTipoRepresentante);
+
+                while (rs.next()) {
+                    int idCurso = rs.getInt("id_curso");
+                    String nombreCurso = rs.getString("nombre_curso");
+
+                    Object[] row = {idCurso,nombreCurso};
+                    listCursos.add(row);
+                }
+                rs.close();
+                st.close();
+            }
+            
+            con.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR: " + e.toString());
+        }
+        return listCursos;
     }
     
     
