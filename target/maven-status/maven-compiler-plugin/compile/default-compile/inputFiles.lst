@@ -1,4 +1,3 @@
-C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\idao\IObserver.java
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\modelo\asignacionCurso.java
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\vista\vistaModificarBeneficiario.java
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\idao\IRepresentantes.java
@@ -14,6 +13,7 @@ C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\modelo\
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\controlador\controladorAgregarCurso.java
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\idao\IBeneficiario.java
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\vista\vistaLogin.java
+C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\idao\IObserverVistaBeneficiario.java
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\vista\vistaMenuPrincipal.java
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\dao\daoUsuario.java
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\modelo\beneficiario.java
@@ -37,5 +37,6 @@ C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\control
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\dao\daoPadre.java
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\controlador\controladorAsignarCurso.java
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\dao\daoAsignacionCurso.java
+C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\idao\IObserverVistaMenuPrincipal.java
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\controlador\controladorLogin.java
 C:\Users\Asus\Documents\NetBeansProjects\SistemaBuenPastor\src\main\java\idao\IAsignacionCurso.java

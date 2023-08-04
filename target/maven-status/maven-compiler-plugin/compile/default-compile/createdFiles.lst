@@ -13,6 +13,7 @@ vista\vistaAsignarCurso$2.class
 vista\vistaUsuarios$3.class
 conexion\conexion.class
 dao\daoBeneficiario.class
+vista\vistaUsuarios$6.class
 vista\vistaBeneficiarios$6.class
 vista\vistaMenuMantenedores$5.class
 vista\vistaBeneficiarios$2.class
@@ -42,7 +43,6 @@ vista\vistaLogin$2.class
 dao\daoUsuario.class
 controlador\controladorModificarBeneficiario.class
 vista\vistaUsuarios$4.class
-idao\IObserver.class
 vista\vistaAsignarCurso$1.class
 vista\vistaBeneficiarios$4.class
 vista\vistaLogin.class
@@ -51,8 +51,10 @@ vista\vistaMenuPrincipal.class
 vista\vistaMenuMantenedores$6.class
 idao\IRepresentantes.class
 controlador\controladorBeneficiario.class
+vista\vistaModificarBeneficiario$3.class
 vista\vistaMenuPrincipal$3.class
 idao\ICurso.class
+idao\IObserverVistaBeneficiario.class
 vista\vistaAgregarCurso$1.class
 idao\IUsuario.class
 vista\vistaAgregarBeneficiario$3.class
@@ -69,10 +71,12 @@ vista\vistaMenuPrincipal$4.class
 vista\vistaUsuarios$5.class
 vista\vistaMenuMantenedores$3.class
 dao\daoAsignacionCurso.class
+vista\vistaAgregarBeneficiario$5.class
 controlador\controladorAgregarBeneficiario.class
 vista\vistaLogin$3.class
 controlador\controladorAgregarCurso.class
 modelo\persona.class
 vista\vistaMenuPrincipal$5.class
 dao\daoCurso.class
+idao\IObserverVistaMenuPrincipal.class
 idao\IMadre.class
