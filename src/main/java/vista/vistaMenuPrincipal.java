@@ -5,13 +5,14 @@
  */
 package vista;
 
+import idao.IObserverVistaMenuPrincipal;
 import javax.swing.JFrame;
 
 /**
  *
  * @author Asus
  */
-public class vistaMenuPrincipal extends javax.swing.JFrame {
+public class vistaMenuPrincipal extends javax.swing.JFrame implements IObserverVistaMenuPrincipal{
     vistaUsuarios vistaUsuarios = new vistaUsuarios();
     vistaBeneficiarios vistaBeneficiarios = new vistaBeneficiarios();
     vistaMenuMantenedores vistaMantenedores = new vistaMenuMantenedores();
@@ -20,9 +21,18 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
      */
     public vistaMenuPrincipal() {
         initComponents();
-        this.setLocationRelativeTo(null);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        vistaMantenedores.addObserver(this);
+        vistaBeneficiarios.addObserver(this);
     }
+    
+    @Override
+    public void MostrarVentana() {
+        this.setVisible(true);
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,7 +64,7 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
                 btnUsuariosActionPerformed(evt);
             }
         });
-        jPanel1.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 280, 300));
+        jPanel1.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, 280, 300));
 
         btnBeneficiarios.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 22)); // NOI18N
         btnBeneficiarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Beneficiario.png"))); // NOI18N
@@ -66,7 +76,7 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
                 btnBeneficiariosActionPerformed(evt);
             }
         });
-        jPanel1.add(btnBeneficiarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, 280, 290));
+        jPanel1.add(btnBeneficiarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 280, 290));
 
         btnMantenedores.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 22)); // NOI18N
         btnMantenedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Mantenedor.png"))); // NOI18N
@@ -78,7 +88,7 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
                 btnMantenedoresActionPerformed(evt);
             }
         });
-        jPanel1.add(btnMantenedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, 280, 300));
+        jPanel1.add(btnMantenedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 20, 280, 300));
 
         jButton4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 22)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Registro.png"))); // NOI18N
@@ -90,10 +100,10 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 350, 280, 290));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 340, 280, 290));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoMenu.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -30, -1, 730));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -30, 1240, 730));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -170,4 +180,5 @@ public class vistaMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
 }

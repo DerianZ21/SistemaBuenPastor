@@ -12,13 +12,16 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import idao.IObserver;
+import idao.IObserverVistaBeneficiario;
+import idao.IObserverVistaMenuPrincipal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Asus
  */
-public class vistaBeneficiarios extends javax.swing.JFrame implements IObserver{
+public class vistaBeneficiarios extends javax.swing.JFrame implements IObserverVistaBeneficiario{
     controladorBeneficiario controlador = new controladorBeneficiario(this);
     vistaAgregarBeneficiario vistaAgregarBeneficiario = new vistaAgregarBeneficiario();
     vistaModificarBeneficiario vistaModificarBeneficiario = new vistaModificarBeneficiario();
@@ -28,18 +31,42 @@ public class vistaBeneficiarios extends javax.swing.JFrame implements IObserver{
      */
     public vistaBeneficiarios() {
         initComponents();
-        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         controlador.consultarBeneficiario(tblBeneficiario);
         
         //se obtiene observadores de cambio
         vistaModificarBeneficiario.addObserver(this);
+        vistaAsignarCurso.addObserver(this);
+        vistaAgregarBeneficiario.addObserver(this);
     }
+    private List<IObserverVistaMenuPrincipal> observers = new ArrayList<>();
+
+    public void addObserver(IObserverVistaMenuPrincipal observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObservers() {
+        for (IObserverVistaMenuPrincipal observer : observers) {
+            observer.MostrarVentana();
+        }
+    }
+    
     
     //llamada de metodo para consultar y lenar la tabla de beneficiarios en caso de cambios
     @Override
     public void ActualizarBeneficiario() {
         controlador.consultarBeneficiario(tblBeneficiario);
     }
+    
+    @Override
+    public void ActivarVentana() {
+        this.setEnabled(true);
+    }
+    
+    
+    
+    
+    
     
     //Metodo para seleccionar un beneficiario por cedula
     public String seleccionarCedula(){
@@ -343,6 +370,7 @@ public class vistaBeneficiarios extends javax.swing.JFrame implements IObserver{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btmAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmAgregarActionPerformed
+        this.setEnabled(false);
         vistaAgregarBeneficiario.elegirTipo();
         vistaAgregarBeneficiario.setVisible(true);
     }//GEN-LAST:event_btmAgregarActionPerformed
@@ -353,8 +381,10 @@ public class vistaBeneficiarios extends javax.swing.JFrame implements IObserver{
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarBeneficiarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarBeneficiarioActionPerformed
+        
         String cedulaActual = seleccionarCedula();
         if(!"".equals(cedulaActual)){
+            this.setEnabled(false);
             controlador.llenarCamposModificar(vistaModificarBeneficiario.getTxtCedula(),vistaModificarBeneficiario.getTxtNombre(),vistaModificarBeneficiario.getTxtApellido(), vistaModificarBeneficiario.getTxtTelefono(), vistaModificarBeneficiario.getTxtDireccion(), vistaModificarBeneficiario.getTxtEmail());
             vistaModificarBeneficiario.setVisible(true);
             vistaModificarBeneficiario.setCedulaSeleccionada(cedulaActual);
@@ -364,14 +394,17 @@ public class vistaBeneficiarios extends javax.swing.JFrame implements IObserver{
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String cedulaActual = seleccionarCedula();
         if(!"".equals(cedulaActual)){
-            controlador.llenarCamposModificar(vistaAsignarCurso.getTxtNombreApellido());
+            this.setEnabled(false);
+            controlador.llenarIdBeneficiario(vistaAsignarCurso.getTxtIdBeneficiario());
+            controlador.llenarCamposNombreApellido(vistaAsignarCurso.getTxtNombreApellido());
             controlador.llenarTablaCursos(vistaAsignarCurso.getTblCursos(), this.tipoSeleccionado());
             vistaAsignarCurso.setVisible(true);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void BtnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarActionPerformed
-        // TODO add your handling code here:
+        notifyObservers();
+        this.setVisible(false);
     }//GEN-LAST:event_BtnRegresarActionPerformed
 
     /**

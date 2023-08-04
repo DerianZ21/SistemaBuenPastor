@@ -5,7 +5,6 @@
  */
 package com.mycompany.javacrudpostgres;
 import vista.vistaLogin;
-import vista.vistaUsuarios;
 
 /**
  *

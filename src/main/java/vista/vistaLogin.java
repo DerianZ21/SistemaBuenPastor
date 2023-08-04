@@ -21,8 +21,7 @@ public class vistaLogin extends javax.swing.JFrame{
     
     public vistaLogin() {
         initComponents();
-         //setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-        this.setLocationRelativeTo(null);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
        
       
         
@@ -119,7 +118,7 @@ public class vistaLogin extends javax.swing.JFrame{
                 imagenLoginComponentHidden(evt);
             }
         });
-        getContentPane().add(imagenLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(-160, -60, 1300, 1040));
+        getContentPane().add(imagenLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(-100, -10, 1320, 1040));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

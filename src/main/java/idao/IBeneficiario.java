@@ -21,4 +21,5 @@ public interface IBeneficiario {
     public ArrayList<Object[]> consultarBeneficiario();
     public List<Object[]> obtenerDatos(String cedulaBuscada);
     public List<Object[]> obtenerNombreApellido(String cedulaBuscada);
+    public int obtenerIdBeneficiario(String cedulaBuscada);
 }

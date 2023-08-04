@@ -25,9 +25,9 @@ public class controladorModificarBeneficiario {
     }
 
 //METODO modificar beneficiario
-    public boolean modificarBeneficiario(String cedulaActual){
+    public boolean modificarBeneficiario(String cedulaActual) {
         boolean modificado = false;
-        try{
+        try {
             String cedulaBeneficiario = cedulaActual;
             String cedula = vistaModificarBeneficiario.getTxtCedula().getText();
             String nombre = vistaModificarBeneficiario.getTxtNombre().getText();
@@ -36,7 +36,6 @@ public class controladorModificarBeneficiario {
             String direccion = vistaModificarBeneficiario.getTxtDireccion().getText();
             String email = vistaModificarBeneficiario.getTxtEmail().getText();
 
-
             bene.setCedula(cedula);
             bene.setNombre(nombre);
             bene.setApellido(apellido);
@@ -44,12 +43,22 @@ public class controladorModificarBeneficiario {
             bene.setDireccion(direccion);
             bene.setEmail(email);
 
-            daoBeneficiario.modificarBeneficiario(bene, cedulaBeneficiario);
-            
-            modificado = true;
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(vistaModificarBeneficiario, "ERROR controlador modificarbeneficiario: " + e.toString());
+            int confirmacion = JOptionPane.showConfirmDialog(vistaModificarBeneficiario,
+                    "¿Estás seguro de que deseas modificar al beneficiario?", "Confirmación",
+                    JOptionPane.YES_NO_OPTION);
 
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                daoBeneficiario.modificarBeneficiario(bene, cedulaBeneficiario);
+                modificado = true;
+                JOptionPane.showMessageDialog(vistaModificarBeneficiario,
+                        "El beneficiario ha sido modificado correctamente.", "Éxito",
+                        JOptionPane.INFORMATION_MESSAGE);
+                vistaModificarBeneficiario.notifyObservers();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(vistaModificarBeneficiario,
+                    "ERROR controlador modificarbeneficiario: " + e.toString(), "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
         return modificado;
     }

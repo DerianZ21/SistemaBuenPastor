@@ -49,6 +49,7 @@ public class controladorUsuario {
 
 //MEDOTO controlador funcion INSERTAR
     public void insertarUsuario() {
+        
         String nombreUsuarioTexto = vistaUsuario.getTxtNombreUsuario().getText();
         String apellidoUsuarioTexto = vistaUsuario.getTxtApellidoUsuario().getText();
         String usernameTexto = vistaUsuario.getTxtUsername().getText();

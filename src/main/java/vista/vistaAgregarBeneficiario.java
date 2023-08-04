@@ -7,6 +7,9 @@ package vista;
 
 import com.toedter.calendar.JDateChooser;
 import controlador.controladorAgregarBeneficiario;
+import idao.IObserverVistaBeneficiario;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -22,6 +25,18 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
     public vistaAgregarBeneficiario() {
         initComponents();
         txtTipo.setEditable(false);
+    }
+    
+    private List<IObserverVistaBeneficiario> observers = new ArrayList<>();
+
+    public void addObserver(IObserverVistaBeneficiario observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObservers() {
+        for (IObserverVistaBeneficiario observer : observers) {
+            observer.ActivarVentana();
+        }
     }
     
     public void elegirTipo(){
@@ -92,24 +107,25 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
         jdcFechaNacimiento = new com.toedter.calendar.JDateChooser();
         pnlPadres = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        txtApellidoPadre = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         txtCedulaPadre = new javax.swing.JTextField();
+        txtApellidoPadre = new javax.swing.JTextField();
         txtNombrePadre = new javax.swing.JTextField();
         txtNombreMadre = new javax.swing.JTextField();
+        txtApellidoMadre = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        txtApellidoMadre = new javax.swing.JTextField();
         Nombre = new javax.swing.JLabel();
         txtCedulaMadre = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        BtnRegresar1 = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPadres = new javax.swing.JTable();
@@ -119,42 +135,42 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 52, 210, 30));
+        jPanel1.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 210, 30));
 
         jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
         jLabel1.setText("Nombres:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
         jLabel2.setText("Apellidos:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
         jLabel3.setText("Cédula");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
         jLabel4.setText("Fecha de nacimiento:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
         jLabel5.setText("Teléfono:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
         jLabel6.setText("Dirección:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 311, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
         jLabel7.setText("E-mail:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 363, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
         jLabel8.setText("Tipo:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 410, -1, -1));
-        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 102, 370, 30));
-        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 252, 360, 30));
-        jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, 370, 30));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 350, -1, -1));
+        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 90, 370, 30));
+        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 360, 30));
+        jPanel1.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 370, 30));
 
         jTextField6.setText("jTextField1");
         jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 229, -1, 0));
@@ -164,12 +180,12 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
 
         jTextField8.setText("jTextField1");
         jPanel1.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 249, -1, 0));
-        jPanel1.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 302, 360, 30));
-        jPanel1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 352, 360, 30));
-        jPanel1.add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 402, 360, 30));
+        jPanel1.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, 360, 30));
+        jPanel1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 300, 360, 30));
+        jPanel1.add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, 360, 30));
 
         jdcFechaNacimiento.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(jdcFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 160, 36));
+        jPanel1.add(jdcFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, 160, 36));
 
         pnlPadres.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -177,22 +193,21 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
         jLabel9.setText("PADRE");
         pnlPadres.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, -1));
 
-        jLabel10.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 16)); // NOI18N
-        jLabel10.setText("MADRE");
-        pnlPadres.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, -1, -1));
-
         jLabel11.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
         jLabel11.setText("Cédula:");
         pnlPadres.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
-        jLabel12.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
-        jLabel12.setText("Nombre:");
-        pnlPadres.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
-
         jLabel13.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
         jLabel13.setText("Apellido:");
-        pnlPadres.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
-        pnlPadres.add(txtApellidoPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 250, 30));
+        pnlPadres.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
+
+        jLabel12.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
+        jLabel12.setText("Nombre:");
+        pnlPadres.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+
+        jLabel10.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 16)); // NOI18N
+        jLabel10.setText("MADRE");
+        pnlPadres.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, -1, -1));
 
         txtCedulaPadre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -200,36 +215,29 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
             }
         });
         pnlPadres.add(txtCedulaPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 250, 30));
-        pnlPadres.add(txtNombrePadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 250, 30));
-        pnlPadres.add(txtNombreMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 270, 30));
+        pnlPadres.add(txtApellidoPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 250, 30));
+        pnlPadres.add(txtNombrePadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 250, 30));
+        pnlPadres.add(txtNombreMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 80, 270, 30));
+        pnlPadres.add(txtApellidoMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, 270, 30));
 
         jLabel15.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
         jLabel15.setText("Apellido:");
-        pnlPadres.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, -1, -1));
+        pnlPadres.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 120, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
         jLabel14.setText("Cédula:");
         pnlPadres.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, -1, -1));
-        pnlPadres.add(txtApellidoMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, 270, 30));
 
         Nombre.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
         Nombre.setText("Nombre:");
-        pnlPadres.add(Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 90, -1, -1));
+        pnlPadres.add(Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 80, -1, -1));
         pnlPadres.add(txtCedulaMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, 270, 30));
 
-        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoParaAgregar.png"))); // NOI18N
-        jLabel21.setText("jLabel20");
-        pnlPadres.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 200));
-
-        jPanel1.add(pnlPadres, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 510, 700, 200));
+        jPanel1.add(pnlPadres, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 700, 170));
 
         jLabel16.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
         jLabel16.setText("AGREGAR BENEFICIARIO");
         jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, -1, -1));
-
-        jLabel17.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
-        jLabel17.setText("AGREGAR PADRES");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 480, -1, -1));
 
         btnAgregar.setFont(new java.awt.Font("Arial Rounded MT Bold", 2, 20)); // NOI18N
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/IconoAgregarBeneficiario.png"))); // NOI18N
@@ -239,11 +247,27 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 710, 210, -1));
+        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 630, 210, -1));
+
+        jLabel17.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
+        jLabel17.setText("AGREGAR PADRES");
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 410, -1, -1));
+
+        BtnRegresar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Regresar.png"))); // NOI18N
+        BtnRegresar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnRegresar1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BtnRegresar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 60));
 
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoParaAgregar.png"))); // NOI18N
         jLabel20.setText("jLabel20");
         jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 790));
+
+        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoParaAgregar.png"))); // NOI18N
+        jLabel21.setText("jLabel20");
+        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 690, 200));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 790));
 
@@ -268,7 +292,7 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblPadres);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 550, 750));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 550, 680));
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoParaAgregar.png"))); // NOI18N
         jLabel18.setText("jLabel18");
@@ -284,8 +308,10 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
         tipo = txtTipo.getText();
         if(tipo.equals("Hijo")){
             controladorAgregarBeneficiario.insertarBeneficiariohijo();
+            notifyObservers();
         }else{
             controladorAgregarBeneficiario.insertarBeneficiarioPadres();
+            notifyObservers();
         }
         
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -302,6 +328,11 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
     private void txtCedulaPadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaPadreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCedulaPadreActionPerformed
+
+    private void BtnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresar1ActionPerformed
+       this.setVisible(false);
+       notifyObservers();
+    }//GEN-LAST:event_BtnRegresar1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -339,6 +370,7 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnRegresar1;
     private javax.swing.JLabel Nombre;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JLabel jLabel1;

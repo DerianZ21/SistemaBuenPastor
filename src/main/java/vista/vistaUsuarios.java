@@ -1,6 +1,9 @@
 package vista;
 
 import controlador.controladorUsuario;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -19,7 +22,18 @@ public class vistaUsuarios extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         txtIDUsuarios.disable();
         controlador.consultarUsuarios(tbListaUsuarios);
+        
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                dispose(); // Cierra solo la ventana actual
+            }
+        });
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

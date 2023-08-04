@@ -9,7 +9,7 @@ package idao;
  *
  * @author Asus
  */
-public interface IObserverVistaBeneficiario {
-    void ActualizarBeneficiario();
-    void ActivarVentana();
+public interface IObserverVistaMenuPrincipal {
+    void MostrarVentana();
+   
 }

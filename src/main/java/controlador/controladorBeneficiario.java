@@ -75,22 +75,27 @@ public class controladorBeneficiario {
     public void llenarCamposModificar(JTextField cedula, JTextField nombre, JTextField apellido, JTextField telefono, JTextField direccion, JTextField email) {
         
         String cedulaActual = vistaBeneficiarios.seleccionarCedula();
-        if(!"".equals(cedulaActual)){
-            List<Object[]> datos = daoBeneficiario.obtenerDatos(cedulaActual);
 
-            Object[] primeraFila = datos.get(0);
-            cedula.setText((String) primeraFila[0]);
-            nombre.setText((String) primeraFila[1]);
-            apellido.setText((String) primeraFila[2]);
-            telefono.setText((String) primeraFila[3]);
-            direccion.setText((String) primeraFila[4]);
-            email.setText((String) primeraFila[5]);
+        try {
+            if(!"".equals(cedulaActual)){
+                List<Object[]> datos = daoBeneficiario.obtenerDatos(cedulaActual);
+
+                Object[] primeraFila = datos.get(0);
+                cedula.setText((String) primeraFila[0]);
+                nombre.setText((String) primeraFila[1]);
+                apellido.setText((String) primeraFila[2]);
+                telefono.setText((String) primeraFila[3]);
+                direccion.setText((String) primeraFila[4]);
+                email.setText((String) primeraFila[5]);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(vistaBeneficiarios, "ERROR: " + e.toString());
         }
     }
     
     
 //metodo para llenar los campos nombre y apellido
-    public void llenarCamposModificar(JTextField nombreApellido) {
+    public void llenarCamposNombreApellido(JTextField nombreApellido) {
         
         String cedulaActual = vistaBeneficiarios.seleccionarCedula();
         if(!"".equals(cedulaActual)){
@@ -124,6 +129,23 @@ public class controladorBeneficiario {
             JOptionPane.showMessageDialog(vistaBeneficiarios, "ERROR controlador beneficiario llenar tabla asignar curso: " + e.toString());
         }
         
+    }
+    
+//metodo para llenar el campo idBeneficiario para asignación
+    public void llenarIdBeneficiario(JTextField txtIdBeneficiario){
+        
+        String cedulaActual = vistaBeneficiarios.seleccionarCedula();
+        try {
+            if(!"".equals(cedulaActual)){
+            Integer idBeneficiario = daoBeneficiario.obtenerIdBeneficiario(cedulaActual);
+            
+            txtIdBeneficiario.setText(idBeneficiario.toString());
+        }
+            
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(vistaBeneficiarios, "ERROR controlador beneficiario llenar tabla asignar curso: " + e.toString());
+        }
     }
     
     

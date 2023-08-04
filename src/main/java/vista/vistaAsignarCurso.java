@@ -5,6 +5,11 @@
  */
 package vista;
 
+import controlador.controladorAsignarCurso;
+import idao.IObserverVistaBeneficiario;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -13,6 +18,7 @@ import javax.swing.JTextField;
  * @author Asus
  */
 public class vistaAsignarCurso extends javax.swing.JFrame {
+    controladorAsignarCurso controlador = new controladorAsignarCurso(this);
 
     /**
      * Creates new form vistaAsignarCurso
@@ -20,7 +26,33 @@ public class vistaAsignarCurso extends javax.swing.JFrame {
     public vistaAsignarCurso() {
         initComponents();
     }
+    
+    private List<IObserverVistaBeneficiario> observers = new ArrayList<>();
 
+    public void addObserver(IObserverVistaBeneficiario observer) {
+        observers.add(observer);
+    }
+
+    public void notifyObservers() {
+        for (IObserverVistaBeneficiario observer : observers) {
+            observer.ActualizarBeneficiario();
+            observer.ActivarVentana();
+        }
+    }
+    
+    public int SeleccionarCurso(){ 
+        int idCurso = -1;
+            int filaSeleccionada = this.getTblCursos().getSelectedRow();
+            if (filaSeleccionada == -1) {
+                JOptionPane.showMessageDialog(this, "Por favor, seleccione un curso.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                int indiceCedula = 0;
+
+                idCurso =  (int) this.getTblCursos().getValueAt(filaSeleccionada, indiceCedula);
+            }
+            
+         return idCurso;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,6 +70,8 @@ public class vistaAsignarCurso extends javax.swing.JFrame {
         tblCursos = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         BtnRegresar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtIdBeneficiario = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -45,10 +79,10 @@ public class vistaAsignarCurso extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
         jLabel1.setText("Beneficiario:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, -1, -1));
 
         txtNombreApellido.setEnabled(false);
-        getContentPane().add(txtNombreApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 330, 30));
+        getContentPane().add(txtNombreApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 270, 30));
 
         jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 15)); // NOI18N
         jLabel2.setText("Cursos:");
@@ -93,19 +127,29 @@ public class vistaAsignarCurso extends javax.swing.JFrame {
         });
         getContentPane().add(BtnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 50));
 
+        jLabel5.setText("ID:");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, -1, -1));
+
+        txtIdBeneficiario.setEnabled(false);
+        getContentPane().add(txtIdBeneficiario, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 120, 90, 30));
+
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoParaAgregar.png"))); // NOI18N
         jLabel4.setText("jLabel4");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 580));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 580));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAsignarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsignarCursoActionPerformed
-        // TODO add your handling code here:
+        int idCurso = this.SeleccionarCurso();
+        if(idCurso!=-1){
+            controlador.insertarAsignacionCurso();
+        }
     }//GEN-LAST:event_btnAsignarCursoActionPerformed
 
     private void BtnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        notifyObservers();
     }//GEN-LAST:event_BtnRegresarActionPerformed
 
     /**
@@ -150,8 +194,10 @@ public class vistaAsignarCurso extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblCursos;
+    private javax.swing.JTextField txtIdBeneficiario;
     private javax.swing.JTextField txtNombreApellido;
     // End of variables declaration//GEN-END:variables
 
@@ -169,6 +215,14 @@ public class vistaAsignarCurso extends javax.swing.JFrame {
 
     public void setTblCursos(JTable tblCursos) {
         this.tblCursos = tblCursos;
+    }
+
+    public JTextField getTxtIdBeneficiario() {
+        return txtIdBeneficiario;
+    }
+
+    public void setTxtIdBeneficiario(JTextField txtIdBeneficiario) {
+        this.txtIdBeneficiario = txtIdBeneficiario;
     }
     
     

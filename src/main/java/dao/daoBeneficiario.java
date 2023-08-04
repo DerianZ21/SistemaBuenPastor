@@ -279,7 +279,6 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
                 modificar = csb.execute();
                 csb.close();
                 con.close();
-                JOptionPane.showMessageDialog(null, "Se modificó correctamente");
             }
             
         } catch (Exception e) {
@@ -356,26 +355,67 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
         try {
             Connection con = this.iniciarConexion();
             String consulta = "SELECT nombre, apellido FROM persona WHERE cedula = ?";
-            PreparedStatement pst = con.prepareStatement(consulta);
-            pst.setString(1, cedulaBuscada);
+            PreparedStatement psna = con.prepareStatement(consulta);
+            psna.setString(1, cedulaBuscada);
 
-            ResultSet rs = pst.executeQuery();
+            ResultSet rsan = psna.executeQuery();
 
-            while (rs.next()) {
-                String nombre = rs.getString("nombre");
-                String apellido = rs.getString("apellido");
+            while (rsan.next()) {
+                String nombre = rsan.getString("nombre");
+                String apellido = rsan.getString("apellido");
 
                 Object[] datos = {nombre, apellido};
                 nombreApellido.add(datos);
             }
 
             // Cerrar recursos
-            rs.close();
-            pst.close();
+            rsan.close();
+            psna.close();
             con.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error dao beneficiario obtener nombre y apellido:" + e.toString());
         }
         return nombreApellido;
+    }
+
+    @Override
+    public int obtenerIdBeneficiario(String cedulaBuscada) {
+        int idBeneficiario = -1;
+        
+        String consultaIdPersona = "SELECT id_persona FROM persona WHERE cedula = ?";
+        String consultaIdBeneficiario = "SELECT id_beneficiario FROM beneficiario WHERE id_persona = ?";
+        try {
+            int idPersona = -1;
+            Connection con = this.iniciarConexion();
+            PreparedStatement psp = con.prepareStatement(consultaIdPersona);
+            psp.setString(1, cedulaBuscada);
+
+            ResultSet rsp = psp.executeQuery();
+            
+            if(rsp.next()){
+                idPersona = rsp.getInt("id_persona");
+            }
+            psp.close();
+            rsp.close();
+            
+            PreparedStatement psb = con.prepareStatement(consultaIdBeneficiario);
+            psb.setInt(1, idPersona);
+
+            ResultSet rsb = psb.executeQuery();
+            
+            if(rsb.next()){
+                idBeneficiario = rsb.getInt("id_beneficiario");
+            }
+            
+            psb.close();
+            rsb.close();
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error dao beneficiario obtener inBeneficiario:" + e.toString());
+        }
+        
+        return idBeneficiario;
+        
     }
 }

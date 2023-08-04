@@ -5,6 +5,12 @@
  */
 package vista;
 
+import java.util.ArrayList;
+import java.util.List;
+import idao.IObserverVistaBeneficiario;
+import idao.IObserverVistaMenuPrincipal;
+import javax.swing.JFrame;
+
 /**
  *
  * @author Asus
@@ -17,7 +23,22 @@ public class vistaMenuMantenedores extends javax.swing.JFrame {
      */
     public vistaMenuMantenedores() {
         initComponents();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
+    
+    private List<IObserverVistaMenuPrincipal> observers = new ArrayList<>();
+
+    public void addObserver(IObserverVistaMenuPrincipal observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObservers() {
+        for (IObserverVistaMenuPrincipal observer : observers) {
+            observer.MostrarVentana();
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -116,7 +137,9 @@ public class vistaMenuMantenedores extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void BtnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarActionPerformed
-        // TODO add your handling code here:
+        notifyObservers();
+        this.setVisible(false);
+        
     }//GEN-LAST:event_BtnRegresarActionPerformed
 
     /**
