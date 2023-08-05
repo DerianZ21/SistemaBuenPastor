@@ -10,9 +10,23 @@ package modelo;
  * @author Asus
  */
 public class curso {
+    private int idCurso;
     private String nombreCurso, tipoBeneficiario;
 
     public curso() {
+    }
+
+    public int getIdCurso() {
+        return idCurso;
+    }
+
+    public void setIdCurso(int idCurso) {
+        this.idCurso = idCurso;
+    }
+
+    public curso(int idCurso, String nombreCurso) {
+        this.idCurso = idCurso;
+        this.nombreCurso = nombreCurso;
     }
 
     public curso(String nombreCurso, String tipoBeneficiario) {
@@ -34,6 +48,11 @@ public class curso {
 
     public void setTipoBeneficiario(String tipoBeneficiario) {
         this.tipoBeneficiario = tipoBeneficiario;
+    }
+
+    @Override
+    public String toString() {
+        return idCurso + "." + nombreCurso ;
     }
     
     

@@ -14,8 +14,26 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import idao.IObserverVistaBeneficiario;
 import idao.IObserverVistaMenuPrincipal;
+import java.io.File;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.export.JExcelApiExporter;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -122,9 +140,9 @@ public class vistaBeneficiarios extends javax.swing.JFrame implements IObserverV
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBeneficiario = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        jButton6 = new javax.swing.JButton();
+        BtnReporteExcel = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        BtnGenerarPdf = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -295,10 +313,15 @@ public class vistaBeneficiarios extends javax.swing.JFrame implements IObserverV
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton6.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 17)); // NOI18N
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/excel.png"))); // NOI18N
-        jButton6.setText("Exportar EXCEL");
-        jPanel3.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 280, 120));
+        BtnReporteExcel.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 17)); // NOI18N
+        BtnReporteExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/excel.png"))); // NOI18N
+        BtnReporteExcel.setText("Exportar EXCEL");
+        BtnReporteExcel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnReporteExcelActionPerformed(evt);
+            }
+        });
+        jPanel3.add(BtnReporteExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 280, 120));
 
         jButton4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 17)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iconoAsignar1.png"))); // NOI18N
@@ -310,10 +333,15 @@ public class vistaBeneficiarios extends javax.swing.JFrame implements IObserverV
         });
         jPanel3.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 280, 95));
 
-        jButton5.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 17)); // NOI18N
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pdf-icon.png"))); // NOI18N
-        jButton5.setText("Exportar PDF");
-        jPanel3.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 248, 280, 110));
+        BtnGenerarPdf.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 17)); // NOI18N
+        BtnGenerarPdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pdf-icon.png"))); // NOI18N
+        BtnGenerarPdf.setText("Exportar PDF");
+        BtnGenerarPdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnGenerarPdfActionPerformed(evt);
+            }
+        });
+        jPanel3.add(BtnGenerarPdf, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 248, 280, 110));
         jPanel3.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 422, 218, 10));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoParaAgregar.png"))); // NOI18N
@@ -407,6 +435,104 @@ public class vistaBeneficiarios extends javax.swing.JFrame implements IObserverV
         this.setVisible(false);
     }//GEN-LAST:event_BtnRegresarActionPerformed
 
+    private void BtnReporteExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnReporteExcelActionPerformed
+        generarListaBeneficiarioExcel();
+    }//GEN-LAST:event_BtnReporteExcelActionPerformed
+
+    private void BtnGenerarPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnGenerarPdfActionPerformed
+        try {
+            generarListaBeneficiario();
+        } catch (SQLException ex) {
+            Logger.getLogger(vistaBeneficiarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(vistaBeneficiarios.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }//GEN-LAST:event_BtnGenerarPdfActionPerformed
+    
+    private void generarListaBeneficiario() throws SQLException, JRException {
+    Connection conexion;
+    try {
+        String usuario = "postgres";
+        String contrasena = "d123456";
+        String base = "bdescuela";
+
+        conexion = DriverManager.getConnection("jdbc:postgresql://127.0.0.1/" + base + "?" + "user=" + usuario + "&password=" + contrasena);
+
+        conexion.setAutoCommit(false);
+
+        if (conexion != null) {
+            System.out.println("Conexion lista");
+        }
+
+        String report = System.getProperty("user.dir") + "/src/main/resources/ListadoBeneficiario.jrxml";
+
+        JasperReport jasperReport = JasperCompileManager.compileReport(report);
+
+        // No se definen parámetros para el informe
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conexion);
+
+        JasperViewer.viewReport(jasperPrint, false);
+    } catch (JRException ex) {
+        Logger.getLogger(controladorBeneficiario.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+}
+public static void generarListaBeneficiarioExcel() {
+        try {
+            String usuario = "postgres";
+            String contrasena = "d123456";
+            String base = "bdescuela";
+
+            Connection conexion = DriverManager.getConnection("jdbc:postgresql://127.0.0.1/" + base + "?" + "user=" + usuario + "&password=" + contrasena);
+
+            conexion.setAutoCommit(false);
+
+            String reportJRXML = "/ListadoBeneficiario.jrxml"; 
+            // Cargar el archivo JRXML utilizando ClassLoader
+            InputStream inputStream = vistaBeneficiarios.class.getResourceAsStream(reportJRXML);
+
+            if (inputStream == null) {
+                System.out.println("No se pudo encontrar el archivo JRXML.");
+                return;
+            }
+
+            // Cargar el diseño del archivo JRXML
+            JasperDesign jasperDesign = JRXmlLoader.load(inputStream);
+
+            // Compilar el diseño a formato Jasper
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+
+            System.out.println("Archivo JRXML compilado exitosamente a formato Jasper (.jasper).");
+
+            // No se definen parámetros para el informe
+
+            // Generar informe en formato Excel (XLS)
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conexion);
+
+            // Mostrar un cuadro de diálogo para seleccionar la ruta y el nombre del archivo Excel
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Guardar informe en formato Excel");
+            int seleccion = fileChooser.showSaveDialog(null);
+
+            if (seleccion == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                String outputExcel = file.getAbsolutePath() + ".xls";
+
+                JExcelApiExporter exporter = new JExcelApiExporter();
+                exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, outputExcel);
+
+                exporter.exportReport();
+
+                System.out.println("Informe generado en formato Excel exitosamente en: " + outputExcel);
+            } else {
+                System.out.println("Exportación a Excel cancelada por el usuario.");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -443,14 +569,14 @@ public class vistaBeneficiarios extends javax.swing.JFrame implements IObserverV
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnGenerarPdf;
     private javax.swing.JButton BtnRegresar;
+    private javax.swing.JButton BtnReporteExcel;
     private javax.swing.JButton btmAgregar;
     private javax.swing.JButton btnEditarBeneficiario;
     private javax.swing.JButton btnEliminar;
     private java.awt.Button button2;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;

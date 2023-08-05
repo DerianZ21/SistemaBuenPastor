@@ -88,6 +88,31 @@ public class daoCurso extends conexion implements ICurso{
         }
         return listCursos;
     }
+
+    @Override
+    public ArrayList<Object[]> consultarCursos() {
+        ArrayList<Object[]> listCurso = new ArrayList<>();
+        try {
+            Connection con = this.iniciarConexion();
+            String consulta = "SELECT * FROM curso";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(consulta);
+
+            while (rs.next()) {
+                String nombreCurso = rs.getString("nombre_curso");
+                int idCurso = rs.getInt("id_curso");
+
+                Object[] row = {idCurso, nombreCurso};
+                listCurso.add(row);
+            }
+            rs.close();
+            st.close();
+            con.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR: " + e.toString());
+        }
+        return listCurso;
+    }
     
     
     

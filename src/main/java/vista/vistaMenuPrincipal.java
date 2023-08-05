@@ -22,7 +22,6 @@ public class vistaMenuPrincipal extends javax.swing.JFrame implements IObserverV
     public vistaMenuPrincipal() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         vistaMantenedores.addObserver(this);
         vistaBeneficiarios.addObserver(this);
     }
@@ -31,8 +30,6 @@ public class vistaMenuPrincipal extends javax.swing.JFrame implements IObserverV
     public void MostrarVentana() {
         this.setVisible(true);
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.

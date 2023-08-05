@@ -26,7 +26,7 @@ import vista.vistaAgregarBeneficiario;
  */
 public class controladorAgregarBeneficiario {
 
-    private final vistaAgregarBeneficiario vistaAgregarModificarBeneficiario;
+    private final vistaAgregarBeneficiario vistaAgregarBeneficiario;
     beneficiario bene = new beneficiario();
     madre ma = new madre();
     padre pa = new padre();
@@ -36,7 +36,7 @@ public class controladorAgregarBeneficiario {
     daoRepresentantes daoRepresentantes = new daoRepresentantes();
 
     public controladorAgregarBeneficiario(vistaAgregarBeneficiario vistaAgregarBeneficiario) {
-        this.vistaAgregarModificarBeneficiario = vistaAgregarBeneficiario;
+        this.vistaAgregarBeneficiario = vistaAgregarBeneficiario;
     }
 
 //MEDOTO controlador funcion CONSULTAR
@@ -53,7 +53,7 @@ public class controladorAgregarBeneficiario {
             paramTabla.setModel(modelo);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(vistaAgregarModificarBeneficiario, "ERROR en controlador madre: " + e.toString());
+            JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "ERROR en controlador madre: " + e.toString());
         }
     }
 
@@ -71,27 +71,27 @@ public class controladorAgregarBeneficiario {
             paramTabla.setModel(modelo);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(vistaAgregarModificarBeneficiario, "ERROR en controlador madre: " + e.toString());
+            JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "ERROR en controlador madre: " + e.toString());
         }
     }
 
 //METODO controlador funcion INSERTAR PADRES
     public void insertarBeneficiarioPadres() {
-        String cedula = vistaAgregarModificarBeneficiario.getTxtCedula().getText();
-        String nombre = vistaAgregarModificarBeneficiario.getTxtNombre().getText();
-        String apellido = vistaAgregarModificarBeneficiario.getTxtApellido().getText();
-        Date fechaNacimiento = vistaAgregarModificarBeneficiario.getJdcFechaNacimiento().getDate();
-        String telefono = vistaAgregarModificarBeneficiario.getTxtTelefono().getText();
-        String direccion = vistaAgregarModificarBeneficiario.getTxtDireccion().getText();
-        String email = vistaAgregarModificarBeneficiario.getTxtEmail().getText();
-        String tipo = vistaAgregarModificarBeneficiario.getTxtTipo().getText();
+        String cedula = vistaAgregarBeneficiario.getTxtCedula().getText();
+        String nombre = vistaAgregarBeneficiario.getTxtNombre().getText();
+        String apellido = vistaAgregarBeneficiario.getTxtApellido().getText();
+        Date fechaNacimiento = vistaAgregarBeneficiario.getJdcFechaNacimiento().getDate();
+        String telefono = vistaAgregarBeneficiario.getTxtTelefono().getText();
+        String direccion = vistaAgregarBeneficiario.getTxtDireccion().getText();
+        String email = vistaAgregarBeneficiario.getTxtEmail().getText();
+        String tipo = vistaAgregarBeneficiario.getTxtTipo().getText();
 
         try {
             if (cedula.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento == null
                     || telefono.isEmpty() || direccion.isEmpty() || email.isEmpty() || tipo.isEmpty()) {
-                JOptionPane.showMessageDialog(vistaAgregarModificarBeneficiario, "Por favor llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "Por favor llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
             } else if(daoBeneficiario.verificarCedula(cedula)){
-                JOptionPane.showMessageDialog(vistaAgregarModificarBeneficiario, "La cedula que usted ingresó ya existe, verifique su inforamción", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "La cedula que usted ingresó ya existe, verifique su inforamción", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
 
                 bene.setCedula(cedula);
@@ -103,38 +103,85 @@ public class controladorAgregarBeneficiario {
                 bene.setEmail(email);
                 bene.setTipo(tipo);
 
-                daoBeneficiario.insertarBeneficiarioPadres(bene);
+                boolean insertado = daoBeneficiario.insertarBeneficiarioPadres(bene);
+                if (insertado) {
+                    JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "Se insertó correctamente");
+                    vistaAgregarBeneficiario.dispose();
+                }
 
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(vistaAgregarModificarBeneficiario, "ERROR:" + e.toString());
+            JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "ERROR:" + e.toString());
         }
     }
+    
+
+// METODO controlador funcion INSERTAR padre no registrado
+    public void insertarBeneficiarioNuevoPadre(){
+        boolean insertado;
+        String cedula = vistaAgregarBeneficiario.getTxtCedula().getText();
+        String nombre = vistaAgregarBeneficiario.getTxtNombre().getText();
+        String apellido = vistaAgregarBeneficiario.getTxtApellido().getText();
+        Date fechaNacimiento = vistaAgregarBeneficiario.getJdcFechaNacimiento().getDate();
+        String telefono = vistaAgregarBeneficiario.getTxtTelefono().getText();
+        String direccion = vistaAgregarBeneficiario.getTxtDireccion().getText();
+        String email = vistaAgregarBeneficiario.getTxtEmail().getText();
+        String tipo = vistaAgregarBeneficiario.getTxtTipo().getText();
+        
+        try {
+            if (cedula.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento == null
+                    || telefono.isEmpty() || direccion.isEmpty() || email.isEmpty() || tipo.isEmpty()) {
+                JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "Por favor llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            }else if(daoBeneficiario.verificarCedula(cedula)){
+                JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "La cedula que usted ingresó ya existe, verifique su inforamción", "Error", JOptionPane.ERROR_MESSAGE);
+            }else{
+                bene.setCedula(cedula);
+                bene.setNombre(nombre);
+                bene.setApellido(apellido);
+                bene.setFecha_nacimiento(fechaNacimiento);
+                bene.setTelefono(telefono);
+                bene.setDireccion(direccion);
+                bene.setEmail(email);
+                bene.setTipo(tipo);
+                
+                insertado = daoBeneficiario.insertarBeneficiarioNuevoPadre(bene);
+                
+                if (insertado) {
+                    JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "Se insertó correctamente");
+                    vistaAgregarBeneficiario.dispose();
+                }
+            }
+        } catch (Exception e) {
+        }
+        
+    }
+    
+    
 
 // METODO controlador funcion INSERTAR hijo
     public void insertarBeneficiariohijo() {
         boolean insertado;
-        String cedula = vistaAgregarModificarBeneficiario.getTxtCedula().getText();
-        String nombre = vistaAgregarModificarBeneficiario.getTxtNombre().getText();
-        String apellido = vistaAgregarModificarBeneficiario.getTxtApellido().getText();
-        Date fechaNacimiento = vistaAgregarModificarBeneficiario.getJdcFechaNacimiento().getDate();
-        String telefono = vistaAgregarModificarBeneficiario.getTxtTelefono().getText();
-        String direccion = vistaAgregarModificarBeneficiario.getTxtDireccion().getText();
-        String email = vistaAgregarModificarBeneficiario.getTxtEmail().getText();
-        String tipo = vistaAgregarModificarBeneficiario.getTxtTipo().getText();
-        String cedulaMadre = vistaAgregarModificarBeneficiario.getTxtCedulaMadre().getText();
-        String nombreMadre = vistaAgregarModificarBeneficiario.getTxtNombreMadre().getText();
-        String apellidoMadre = vistaAgregarModificarBeneficiario.getTxtApellidoMadre().getText();
-        String cedulaPadre = vistaAgregarModificarBeneficiario.getTxtCedulaPadre().getText();
-        String nombrePadre = vistaAgregarModificarBeneficiario.getTxtNombrePadre().getText();
-        String apellidoPadre = vistaAgregarModificarBeneficiario.getTxtApellidoPadre().getText();
+        String cedula = vistaAgregarBeneficiario.getTxtCedula().getText();
+        String nombre = vistaAgregarBeneficiario.getTxtNombre().getText();
+        String apellido = vistaAgregarBeneficiario.getTxtApellido().getText();
+        Date fechaNacimiento = vistaAgregarBeneficiario.getJdcFechaNacimiento().getDate();
+        String telefono = vistaAgregarBeneficiario.getTxtTelefono().getText();
+        String direccion = vistaAgregarBeneficiario.getTxtDireccion().getText();
+        String email = vistaAgregarBeneficiario.getTxtEmail().getText();
+        String tipo = vistaAgregarBeneficiario.getTxtTipo().getText();
+        String cedulaMadre = vistaAgregarBeneficiario.getTxtCedulaMadre().getText();
+        String nombreMadre = vistaAgregarBeneficiario.getTxtNombreMadre().getText();
+        String apellidoMadre = vistaAgregarBeneficiario.getTxtApellidoMadre().getText();
+        String cedulaPadre = vistaAgregarBeneficiario.getTxtCedulaPadre().getText();
+        String nombrePadre = vistaAgregarBeneficiario.getTxtNombrePadre().getText();
+        String apellidoPadre = vistaAgregarBeneficiario.getTxtApellidoPadre().getText();
 
         try {
             if (cedula.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || fechaNacimiento == null
                     || telefono.isEmpty() || direccion.isEmpty() || email.isEmpty() || tipo.isEmpty()) {
-                JOptionPane.showMessageDialog(vistaAgregarModificarBeneficiario, "Por favor llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "Por favor llene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
             } else if(daoBeneficiario.verificarCedula(cedula)){
-                JOptionPane.showMessageDialog(vistaAgregarModificarBeneficiario, "La cedula que usted ingresó ya existe, verifique su inforamción", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "La cedula que usted ingresó ya existe, verifique su inforamción", "Error", JOptionPane.ERROR_MESSAGE);
             }else {
                 bene.setCedula(cedula);
                 bene.setNombre(nombre);
@@ -177,11 +224,11 @@ public class controladorAgregarBeneficiario {
                 }
 
                 if (insertado) {
-                    JOptionPane.showMessageDialog(vistaAgregarModificarBeneficiario, "Se insertó correctamente");
+                    JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "Se insertó correctamente");
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(vistaAgregarModificarBeneficiario, "ERROR:" + e.toString());
+            JOptionPane.showMessageDialog(vistaAgregarBeneficiario, "ERROR:" + e.toString());
         }
     }
 

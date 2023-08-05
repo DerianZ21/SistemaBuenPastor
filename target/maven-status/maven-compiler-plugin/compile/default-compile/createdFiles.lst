@@ -2,11 +2,15 @@ vista\vistaMenuPrincipal$2.class
 idao\IPadre.class
 modelo\asignacionCurso.class
 vista\vistaAgregarBeneficiario$4.class
+vista\vistaModificarBeneficiario$4.class
 com\mycompany\javacrudpostgres\JavaCRUDPostgres.class
 vista\vistaModificarBeneficiario.class
 vista\vistaMenuMantenedores$2.class
 modelo\curso.class
+vista\vistaRegistroAsistencias.class
+controlador\CheckBoxTableCellRenderer.class
 dao\daoPadre.class
+vista\vistaRegistroAsistencias$2.class
 vista\vistaBeneficiarios$3.class
 dao\daoRepresentantes.class
 vista\vistaAsignarCurso$2.class
@@ -17,6 +21,7 @@ vista\vistaUsuarios$6.class
 vista\vistaBeneficiarios$6.class
 vista\vistaMenuMantenedores$5.class
 vista\vistaBeneficiarios$2.class
+modelo\asistencias.class
 vista\vistaModificarBeneficiario$2.class
 vista\vistaAgregarBeneficiario.class
 modelo\representantes.class
@@ -30,12 +35,15 @@ vista\vistaAgregarCurso$3.class
 modelo\beneficiario.class
 vista\vistaLogin$1.class
 modelo\madre.class
+idao\IAsistencias.class
 vista\vistaMenuPrincipal$1.class
 vista\vistaBeneficiarios.class
+vista\vistaBeneficiarios$8.class
 vista\vistaAgregarCurso.class
 vista\vistaModificarBeneficiario$1.class
 vista\vistaAgregarBeneficiario$1.class
 vista\vistaAgregarCurso$2.class
+vista\vistaRegistroAsistencias$1.class
 vista\vistaUsuarios$1.class
 vista\vistaBeneficiarios$1.class
 modelo\padre.class
@@ -43,6 +51,7 @@ vista\vistaLogin$2.class
 dao\daoUsuario.class
 controlador\controladorModificarBeneficiario.class
 vista\vistaUsuarios$4.class
+vista\vistaBeneficiarios$7.class
 vista\vistaAsignarCurso$1.class
 vista\vistaBeneficiarios$4.class
 vista\vistaLogin.class
@@ -57,7 +66,10 @@ idao\ICurso.class
 idao\IObserverVistaBeneficiario.class
 vista\vistaAgregarCurso$1.class
 idao\IUsuario.class
+controlador\controladorAsistencias.class
+vista\vistaAgregarBeneficiario$6.class
 vista\vistaAgregarBeneficiario$3.class
+vista\vistaAgregarCurso$4.class
 vista\vistaMenuMantenedores.class
 dao\daoMadre.class
 modelo\usuario.class
@@ -79,4 +91,6 @@ modelo\persona.class
 vista\vistaMenuPrincipal$5.class
 dao\daoCurso.class
 idao\IObserverVistaMenuPrincipal.class
+dao\daoAsistencias.class
 idao\IMadre.class
+vista\vistaAsignarCurso$4.class

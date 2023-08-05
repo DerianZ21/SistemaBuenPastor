@@ -4,6 +4,7 @@ import controlador.controladorUsuario;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -23,12 +24,18 @@ public class vistaUsuarios extends javax.swing.JFrame {
         txtIDUsuarios.disable();
         controlador.consultarUsuarios(tbListaUsuarios);
         
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-    
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        // Agregar un WindowListener para controlar el cierre de la ventana
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                dispose(); // Cierra solo la ventana actual
+                // Aquí puedes realizar acciones adicionales antes de cerrar la vista,
+                // o mostrar un cuadro de diálogo de confirmación para cerrar.
+                // Por ejemplo:
+                int opcion = JOptionPane.showConfirmDialog(vistaUsuarios.this, "¿Deseas cerrar la ventana?", "Confirmar cierre", JOptionPane.YES_NO_OPTION);
+                if (opcion == JOptionPane.YES_OPTION) {
+                    dispose();
+                }
             }
         });
     }
@@ -207,6 +214,7 @@ public class vistaUsuarios extends javax.swing.JFrame {
             } else {
             btnInsertar.setEnabled(false);
         }
+        btnInsertar.setEnabled(false);
     }//GEN-LAST:event_tbListaUsuariosMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed

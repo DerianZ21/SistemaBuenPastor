@@ -49,31 +49,32 @@ public class controladorUsuario {
 
 //MEDOTO controlador funcion INSERTAR
     public void insertarUsuario() {
-        
         String nombreUsuarioTexto = vistaUsuario.getTxtNombreUsuario().getText();
         String apellidoUsuarioTexto = vistaUsuario.getTxtApellidoUsuario().getText();
         String usernameTexto = vistaUsuario.getTxtUsername().getText();
         String contrasenaUsuarioTexto = vistaUsuario.getPswContrasenaUsuario().getText();
         String confirmarContrasenaTexto = vistaUsuario.getPswConfirmarContrasena().getText();
-        
-        try {
-            if (nombreUsuarioTexto.isEmpty()||apellidoUsuarioTexto.isEmpty()||usernameTexto.isEmpty()||contrasenaUsuarioTexto.isEmpty()) {
-                JOptionPane.showMessageDialog(vistaUsuario, "Por favor, ingresa el nombre y apellido del alumno.", "Error", JOptionPane.ERROR_MESSAGE);
-            }else if(!contrasenaUsuarioTexto.equals(confirmarContrasenaTexto)){
-                JOptionPane.showMessageDialog(vistaUsuario, "la contraseña no coincide con su confimación.", "Error", JOptionPane.ERROR_MESSAGE);
-            }else if(dao.verificarUsuario(usernameTexto)){
-                JOptionPane.showMessageDialog(vistaUsuario, "El usuario que usted ingresó ya existe, coloque uno diferente", "Error", JOptionPane.ERROR_MESSAGE);
 
-            }else {
-                
-                usu.setNombre(nombreUsuarioTexto);
-                usu.setApellido(apellidoUsuarioTexto);
-                usu.setUsername(usernameTexto);
-                usu.setContrasena(contrasenaUsuarioTexto);
-                dao.insertarUsuario(usu);
+        try {
+            if (nombreUsuarioTexto.isEmpty() || apellidoUsuarioTexto.isEmpty() || usernameTexto.isEmpty() || contrasenaUsuarioTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(vistaUsuario, "Por favor, ingresa el nombre y apellido del usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (!contrasenaUsuarioTexto.equals(confirmarContrasenaTexto)) {
+                JOptionPane.showMessageDialog(vistaUsuario, "La contraseña no coincide con su confirmación.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (dao.verificarUsuario(usernameTexto)) {
+                JOptionPane.showMessageDialog(vistaUsuario, "El usuario que ingresó ya existe, coloque uno diferente.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                int respuesta = JOptionPane.showConfirmDialog(vistaUsuario, "¿Estás seguro de que deseas insertar el usuario?", "Confirmar", JOptionPane.YES_NO_OPTION);
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    usu.setNombre(nombreUsuarioTexto);
+                    usu.setApellido(apellidoUsuarioTexto);
+                    usu.setUsername(usernameTexto);
+                    usu.setContrasena(contrasenaUsuarioTexto);
+                    dao.insertarUsuario(usu);
+                    JOptionPane.showMessageDialog(vistaUsuario, "Usuario insertado correctamente.");
+                }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(vistaUsuario, "ERROR:"+e.toString());
+            JOptionPane.showMessageDialog(vistaUsuario, "ERROR: " + e.toString());
         }
     }
     

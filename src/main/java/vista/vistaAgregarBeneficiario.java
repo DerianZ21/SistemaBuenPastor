@@ -8,8 +8,11 @@ package vista;
 import com.toedter.calendar.JDateChooser;
 import controlador.controladorAgregarBeneficiario;
 import idao.IObserverVistaBeneficiario;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -25,6 +28,22 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
     public vistaAgregarBeneficiario() {
         initComponents();
         txtTipo.setEditable(false);
+        
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        // Agregar un WindowListener para controlar el cierre de la ventana
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Aquí puedes realizar acciones adicionales antes de cerrar la vista,
+                // o mostrar un cuadro de diálogo de confirmación para cerrar.
+                // Por ejemplo:
+                int opcion = JOptionPane.showConfirmDialog(vistaAgregarBeneficiario.this, "¿Deseas cerrar la ventana?", "Confirmar cierre", JOptionPane.YES_NO_OPTION);
+                if (opcion == JOptionPane.YES_OPTION) {
+                    notifyObservers();
+                    dispose();
+                }
+            }
+        });
     }
     
     private List<IObserverVistaBeneficiario> observers = new ArrayList<>();
@@ -36,6 +55,7 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
     private void notifyObservers() {
         for (IObserverVistaBeneficiario observer : observers) {
             observer.ActivarVentana();
+            observer.ActualizarBeneficiario();
         }
     }
     
@@ -124,6 +144,7 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         BtnRegresar1 = new javax.swing.JButton();
+        btnNuevoPadreMadre = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -208,12 +229,6 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 16)); // NOI18N
         jLabel10.setText("MADRE");
         pnlPadres.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, -1, -1));
-
-        txtCedulaPadre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCedulaPadreActionPerformed(evt);
-            }
-        });
         pnlPadres.add(txtCedulaPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 250, 30));
         pnlPadres.add(txtApellidoPadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 250, 30));
         pnlPadres.add(txtNombrePadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 250, 30));
@@ -251,7 +266,7 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
 
         jLabel17.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
         jLabel17.setText("AGREGAR PADRES");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 410, -1, -1));
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, -1, -1));
 
         BtnRegresar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Regresar.png"))); // NOI18N
         BtnRegresar1.addActionListener(new java.awt.event.ActionListener() {
@@ -261,9 +276,17 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
         });
         jPanel1.add(BtnRegresar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 60));
 
+        btnNuevoPadreMadre.setText("NUEVO PADRE");
+        btnNuevoPadreMadre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoPadreMadreActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnNuevoPadreMadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 380, -1, -1));
+
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoParaAgregar.png"))); // NOI18N
         jLabel20.setText("jLabel20");
-        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 790));
+        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 790));
 
         jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoParaAgregar.png"))); // NOI18N
         jLabel21.setText("jLabel20");
@@ -296,7 +319,7 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoParaAgregar.png"))); // NOI18N
         jLabel18.setText("jLabel18");
-        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 790));
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 0, 600, 790));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(685, 0, 630, -1));
 
@@ -304,35 +327,57 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        String tipo;
-        tipo = txtTipo.getText();
-        if(tipo.equals("Hijo")){
-            controladorAgregarBeneficiario.insertarBeneficiariohijo();
-            notifyObservers();
-        }else{
-            controladorAgregarBeneficiario.insertarBeneficiarioPadres();
-            notifyObservers();
+        String tipo = txtTipo.getText();
+        String mensajeConfirmacion = "¿Estás seguro de que deseas agregar el beneficiario?";
+
+        int confirmacion = JOptionPane.showConfirmDialog(this, mensajeConfirmacion, "Confirmación", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            if (tipo.equals("Hijo")) {
+                controladorAgregarBeneficiario.insertarBeneficiariohijo();
+                notifyObservers();
+            } else {
+                if(txtCedula.isEditable()){
+                    controladorAgregarBeneficiario.insertarBeneficiarioNuevoPadre();
+                }else{
+                    controladorAgregarBeneficiario.insertarBeneficiarioPadres();
+                }
+                notifyObservers();
+            }
+
+            
         }
-        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void tblPadresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPadresMouseClicked
+        tblPadres.setEnabled(true);
         controladorAgregarBeneficiario.seleccionarPadreMadre(tblPadres, txtCedula, txtNombre, txtApellido);
         if (tblPadres.getSelectedRow() != -1) {
             btnAgregar.setEnabled(true);
             } else {
             btnAgregar.setEnabled(false);
         }
+        txtCedula.setEditable(false);
+        txtNombre.setEditable(false);
+        txtApellido.setEditable(false);
+        
     }//GEN-LAST:event_tblPadresMouseClicked
-
-    private void txtCedulaPadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaPadreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCedulaPadreActionPerformed
 
     private void BtnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresar1ActionPerformed
        this.setVisible(false);
        notifyObservers();
     }//GEN-LAST:event_BtnRegresar1ActionPerformed
+
+    private void btnNuevoPadreMadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoPadreMadreActionPerformed
+        txtCedula.setEditable(true);
+        txtNombre.setEditable(true);
+        txtApellido.setEditable(true);
+        tblPadres.setEnabled(false);
+        btnAgregar.setEnabled(true);
+        txtCedula.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+    }//GEN-LAST:event_btnNuevoPadreMadreActionPerformed
 
     /**
      * @param args the command line arguments
@@ -373,6 +418,7 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
     private javax.swing.JButton BtnRegresar1;
     private javax.swing.JLabel Nombre;
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnNuevoPadreMadre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

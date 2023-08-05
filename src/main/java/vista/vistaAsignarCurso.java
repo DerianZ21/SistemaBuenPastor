@@ -7,8 +7,11 @@ package vista;
 
 import controlador.controladorAsignarCurso;
 import idao.IObserverVistaBeneficiario;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -25,6 +28,22 @@ public class vistaAsignarCurso extends javax.swing.JFrame {
      */
     public vistaAsignarCurso() {
         initComponents();
+        
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        // Agregar un WindowListener para controlar el cierre de la ventana
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Aquí puedes realizar acciones adicionales antes de cerrar la vista,
+                // o mostrar un cuadro de diálogo de confirmación para cerrar.
+                // Por ejemplo:
+                int opcion = JOptionPane.showConfirmDialog(vistaAsignarCurso.this, "¿Deseas cerrar la ventana?", "Confirmar cierre", JOptionPane.YES_NO_OPTION);
+                if (opcion == JOptionPane.YES_OPTION) {
+                    notifyObservers();
+                    dispose();
+                }
+            }
+        });
     }
     
     private List<IObserverVistaBeneficiario> observers = new ArrayList<>();

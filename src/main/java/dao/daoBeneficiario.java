@@ -59,6 +59,108 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
         }
         return listBeneficiarios;
     }
+    
+    
+//METODO LOGICA INSERTAR PADRE no registrado
+    @Override
+    public boolean insertarBeneficiarioNuevoPadre(beneficiario bene){
+        boolean personaInsertada = false;
+        boolean beneficiarioInsertado = false;
+        boolean insertado = false;
+        
+        try {
+            Connection con = this.iniciarConexion();
+            //insertar datos en tabla persona de beneficiario
+            String consultaPersonaBene = "INSERT INTO public.persona "
+                    + "(cedula, nombre, apellido, fecha_nacimiento, telefono, direccion, email, tipo) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+            PreparedStatement psnp = con.prepareStatement(consultaPersonaBene, Statement.RETURN_GENERATED_KEYS);
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String formattedDate = simpleDateFormat.format(bene.getFecha_nacimiento());
+            java.sql.Date fecha_nacimiento = java.sql.Date.valueOf(formattedDate);
+            
+            psnp.setString(1, bene.getCedula());
+            psnp.setString(2, bene.getNombre());
+            psnp.setString(3, bene.getApellido());
+            psnp.setDate(4, fecha_nacimiento);
+            psnp.setString(5, bene.getTelefono());
+            psnp.setString(6, bene.getDireccion());
+            psnp.setString(7, bene.getEmail());
+            psnp.setString(8, bene.getTipo());
+            
+            personaInsertada = psnp.execute();
+            
+            ResultSet generatedKeysPersonaBene = psnp.getGeneratedKeys();
+            int idPersonaBeneGenerado = -1;
+            if (generatedKeysPersonaBene.next()) {
+                idPersonaBeneGenerado = generatedKeysPersonaBene.getInt(1);
+            }
+            generatedKeysPersonaBene.close();
+            psnp.close();
+            
+            if(idPersonaBeneGenerado!=-1){
+                
+                String consultaBeneficiario = "INSERT INTO beneficiario (id_persona) VALUES (?)";
+                PreparedStatement psb = con.prepareStatement(consultaBeneficiario);
+                psb.setInt(1, idPersonaBeneGenerado);
+                beneficiarioInsertado = psb.execute();
+                psb.close();
+            }
+            
+            if(idPersonaBeneGenerado!=-1){
+                
+                int idMadreGenerado = -1;
+                int idPadreGenerado = -1;
+                if("Madre".equals(bene.getTipo())){
+                    String consultaMadre = "INSERT INTO madre (id_persona) VALUES (?)";
+                    PreparedStatement psm = con.prepareStatement(consultaMadre);
+                    psm.setInt(1, idPersonaBeneGenerado);
+                    psm.execute();
+                    
+                    ResultSet generatedKeysMadre = psm.getGeneratedKeys();
+                    
+                    if (generatedKeysMadre.next()) {
+                        idMadreGenerado = generatedKeysMadre.getInt(1);
+                    }
+                    generatedKeysMadre.close();
+                    psm.close();
+                    
+                    String consultaRepresentante = "insert into representantes (id_madre) values (?);";
+                    PreparedStatement psr = con.prepareStatement(consultaRepresentante);
+                    psr.setInt(1, idMadreGenerado);
+                    psr.execute();
+                    
+                }else{
+                    String consultaPadre = "INSERT INTO padre (id_persona) VALUES (?)";
+                    PreparedStatement psp = con.prepareStatement(consultaPadre);
+                    psp.setInt(1, idPersonaBeneGenerado);
+                    psp.execute();
+                    
+                    ResultSet generatedKeysPadre = psp.getGeneratedKeys();
+                    
+                    if (generatedKeysPadre.next()) {
+                        idPadreGenerado = generatedKeysPadre.getInt(1);
+                    }
+                    generatedKeysPadre.close();
+                    psp.close();
+                    
+                    String consultaRepresentante = "insert into representantes (id_padre) values (?);";
+                    PreparedStatement psr = con.prepareStatement(consultaRepresentante);
+                    psr.setInt(1, idPadreGenerado);
+                    psr.execute();
+                } 
+            }
+            
+            if(personaInsertada&&beneficiarioInsertado){
+                insertado = true;
+            }
+            
+        } catch (Exception e) {
+            
+        }
+        return insertado;
+    }
 
 //METODO LOGICA INSERTAR PADRES
     @Override

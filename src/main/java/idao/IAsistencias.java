@@ -6,17 +6,13 @@
 package idao;
 
 import java.util.ArrayList;
-import modelo.curso;
 
 /**
  *
  * @author Asus
  */
-public interface ICurso {
+public interface IAsistencias {
     
-    public boolean insertarCurso(curso cu);
-    public ArrayList<Object[]> consultarCursos(String tipoBene);
-    public ArrayList<Object[]> consultarCursos();
-    
+   public ArrayList<Object[]> consultarBeneficiarioCurso(int idCurso);
     
 }

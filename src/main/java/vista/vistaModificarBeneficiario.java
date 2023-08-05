@@ -11,6 +11,10 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import idao.IObserverVistaBeneficiario;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,6 +30,22 @@ public class vistaModificarBeneficiario extends javax.swing.JFrame {
 
     public vistaModificarBeneficiario() {
         initComponents();
+        
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        // Agregar un WindowListener para controlar el cierre de la ventana
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Aquí puedes realizar acciones adicionales antes de cerrar la vista,
+                // o mostrar un cuadro de diálogo de confirmación para cerrar.
+                // Por ejemplo:
+                int opcion = JOptionPane.showConfirmDialog(vistaModificarBeneficiario.this, "¿Deseas cerrar la ventana?", "Confirmar cierre", JOptionPane.YES_NO_OPTION);
+                if (opcion == JOptionPane.YES_OPTION) {
+                    notifyObservers();
+                    dispose();
+                }
+            }
+        });
     }
 
     public void setCedulaSeleccionada(String cedulaSeleccionada) {
@@ -158,7 +178,8 @@ public class vistaModificarBeneficiario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void BtnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        notifyObservers();
     }//GEN-LAST:event_BtnRegresarActionPerformed
 
     /**

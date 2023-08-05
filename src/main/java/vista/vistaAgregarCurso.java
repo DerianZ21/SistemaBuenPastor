@@ -6,7 +6,10 @@
 package vista;
 
 import controlador.controladorAgregarCurso;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 /**
@@ -21,6 +24,16 @@ public class vistaAgregarCurso extends javax.swing.JFrame {
      */
     public vistaAgregarCurso() {
         initComponents();
+        
+        
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                dispose(); // Cierra solo la ventana actual
+            }
+        });
     }
 
     /**
@@ -155,6 +168,4 @@ public class vistaAgregarCurso extends javax.swing.JFrame {
     public void setTxtNombreCurso(JTextField txtNombreCurso) {
         this.txtNombreCurso = txtNombreCurso;
     }
-
-
 }
