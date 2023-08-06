@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="15bc0ce6-38f6-4bea-a357-1d974eefa032">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="nombre_curso" class="java.lang.String">
+	<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+        </parameter>
+        <parameter name="fecha_asistencia" class="java.util.Date">
+        <defaultValueExpression><![CDATA[]]></defaultValueExpression>
+        </parameter>
+	<queryString>
+		<![CDATA[SELECT CASE a.asistencia WHEN true THEN 'Asistió' WHEN false THEN 'Faltó'
+END AS asistencias,
+p.cedula, p.nombre,
+    p.apellido,
+    c.nombre_curso
+FROM
+    persona p
+    JOIN beneficiario b ON p.id_persona = b.id_persona
+    JOIN asignacion_curso ac ON b.id_beneficiario = ac.id_beneficiario
+    JOIN asistencias a ON ac.id_asignacion_curso = a.id_asignacion_curso
+    JOIN curso c ON ac.id_curso = c.id_curso 
+    WHERE c.nombre_curso = $P{nombre_curso} and a.fecha_asistencia = $P{fecha_asistencia}]]>
+	</queryString>
+	<field name="asistencia" class="java.lang.Boolean"/>
+	<field name="cedula" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="nombre_curso" class="java.lang.String"/>
+	<field name="apellido" class="java.lang.String"/>
+	<field name="fecha_asistencia" class="java.util.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			
+			<textField>
+				<reportElement style="Detail" x="100" y="10" width="136" height="23" uuid="d0375bb1-3a04-4c2b-a8c8-22c2dd7a3f53"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_curso}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="60" height="56" uuid="12fed061-01fe-4f15-a78b-a96c79c165d4"/>
+				<imageExpression><![CDATA["C:/Users/Asus/Documents/NetBeansProjects/SistemaBuenPastor/src/main/resources/imagenes/logoBuenPastor.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="Detail" x="100" y="50" width="154" height="22" uuid="0ddc5941-7eec-4ec3-be71-6a73108e2246"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_asistencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="0" width="210" height="74" uuid="bb0d5c08-fde9-4b0e-8085-de0cba9f4399"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[LISTADO DE LOS BENEFICIARIOS]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="48" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="47" width="555" height="1" uuid="50fb13c1-2bfe-4183-a110-80f9974abbef"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="400" y="30" width="138" height="15" uuid="ff2c7ef5-25f2-4fa0-9f3d-486928e2de11"/>
+				<text><![CDATA[Asistencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="150" y="30" width="138" height="15" uuid="1f77d39a-0c59-4d00-8ac3-69974f0916ee"/>
+				<text><![CDATA[Nombre del Estudiante]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="f53001a5-22bb-4f0f-9ea6-d39517a8ccf1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="-1" width="91" height="15" uuid="1617e10d-5ea2-4ada-8193-ed4dc2811ce7"/>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="420" y="-1" width="118" height="15" uuid="bb324e61-4050-4884-8aa0-7a27f127acf7"/>
+				<textFieldExpression><![CDATA[$F{asistencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="120" y="1" width="127" height="15" uuid="1617e10d-5ea2-4ada-8193-ed4dc2811ce7"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="247" y="1" width="128" height="15" uuid="1617e10d-5ea2-4ada-8193-ed4dc2811ce7"/>
+				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="100" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="30d1224f-fb85-4819-99f5-6347404ac820"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="27bff6c4-4cf0-4f37-9db2-6ef81713120c"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="f0ae86d0-d131-4728-8490-fd6a68ce1255"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -7,6 +7,8 @@
 package vista;
 
 import controlador.controladorLogin;
+import idao.IObserverVistaLogin;
+import idao.IObserverVistaMenuPrincipal;
 import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -15,20 +17,25 @@ import javax.swing.JTextField;
  *
  * @author Asus
  */
-public class vistaLogin extends javax.swing.JFrame{
+public class vistaLogin extends javax.swing.JFrame implements IObserverVistaLogin{
     vistaMenuPrincipal vistaMenuPrincipal =  new vistaMenuPrincipal();
     controladorLogin controlador = new controladorLogin(this);
     
     public vistaLogin() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-       
-      
-        
+        vistaMenuPrincipal.addObserver(this);
       //this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         //this.setResizable(false);
         //this.setLocationRelativeTo(null);
         
+    }
+    
+    @Override
+    public void abrirVentana() {
+        this.setVisible(true);
+        txtUsuario.setText("");
+        pswContrasena.setText("");
     }
 
     /** This method is called from within the constructor to

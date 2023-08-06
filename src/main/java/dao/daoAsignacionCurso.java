@@ -19,6 +19,9 @@ import modelo.asignacionCurso;
  * @author Asus
  */
 public class daoAsignacionCurso extends conexion implements IAsignacionCurso{
+    
+    
+    
 
     @Override
     public boolean insertarAsignacionCurso(asignacionCurso asigCur) {
@@ -67,6 +70,33 @@ public class daoAsignacionCurso extends conexion implements IAsignacionCurso{
             JOptionPane.showMessageDialog(null, "ERROR:" + e.toString());
         }
         return false; // Si no encontramos una asignación de curso igual, retornamos false
+    }
+
+    @Override
+    public int colsultarIdAsignacionCurso(int idBene) {
+        
+        int idAsignacionCurso = -1;
+        String consultaIdBeneficiario = "SELECT id_asignacion_curso FROM asignacion_curso WHERE id_beneficiario = ?";
+        try {
+            Connection con = this.iniciarConexion();
+            PreparedStatement psac = con.prepareStatement(consultaIdBeneficiario);
+            psac.setInt(1, idBene);
+
+            ResultSet rsac = psac.executeQuery();
+            
+            if(rsac.next()){
+                idAsignacionCurso = rsac.getInt("id_asignacion_curso");
+            }
+            
+            psac.close();
+            rsac.close();
+            con.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error dao beneficiario obtener inBeneficiario:" + e.toString());
+        }
+        
+        return idAsignacionCurso;
     }
     
 }

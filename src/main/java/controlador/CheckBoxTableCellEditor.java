@@ -4,22 +4,27 @@
  * and open the template in the editor.
  */
 package controlador;
-
 import java.awt.Component;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.AbstractCellEditor;
 import javax.swing.JCheckBox;
+import javax.swing.JTable;
+import javax.swing.table.TableCellEditor;
 
-public class CheckBoxTableCellRenderer extends DefaultTableCellRenderer {
+public class CheckBoxTableCellEditor extends AbstractCellEditor implements TableCellEditor {
     private final JCheckBox checkBox;
 
-    public CheckBoxTableCellRenderer() {
+    public CheckBoxTableCellEditor() {
         checkBox = new JCheckBox();
         checkBox.setHorizontalAlignment(JCheckBox.CENTER);
     }
 
     @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+    public Object getCellEditorValue() {
+        return checkBox.isSelected();
+    }
+
+    @Override
+    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         checkBox.setSelected((boolean) value);
         return checkBox;
     }

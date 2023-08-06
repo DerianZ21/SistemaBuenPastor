@@ -13,4 +13,5 @@ import modelo.asignacionCurso;
  */
 public interface IAsignacionCurso {
     public boolean insertarAsignacionCurso(asignacionCurso asigCur);
+    public int colsultarIdAsignacionCurso(int idBene);
 }

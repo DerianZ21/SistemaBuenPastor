@@ -23,10 +23,12 @@ vista\vistaMenuMantenedores$5.class
 vista\vistaBeneficiarios$2.class
 modelo\asistencias.class
 vista\vistaModificarBeneficiario$2.class
+idao\IObserverVistaLogin.class
 vista\vistaAgregarBeneficiario.class
 modelo\representantes.class
 vista\vistaUsuarios.class
 controlador\controladorLogin.class
+controlador\CheckBoxTableCellEditor.class
 vista\vistaUsuarios$2.class
 vista\vistaAgregarBeneficiario$2.class
 vista\vistaMenuMantenedores$1.class
@@ -56,6 +58,7 @@ vista\vistaAsignarCurso$1.class
 vista\vistaBeneficiarios$4.class
 vista\vistaLogin.class
 controlador\controladorUsuario.class
+vista\vistaRegistroAsistencias$3.class
 vista\vistaMenuPrincipal.class
 vista\vistaMenuMantenedores$6.class
 idao\IRepresentantes.class
@@ -67,6 +70,7 @@ idao\IObserverVistaBeneficiario.class
 vista\vistaAgregarCurso$1.class
 idao\IUsuario.class
 controlador\controladorAsistencias.class
+vista\vistaMenuPrincipal$6.class
 vista\vistaAgregarBeneficiario$6.class
 vista\vistaAgregarBeneficiario$3.class
 vista\vistaAgregarCurso$4.class
@@ -80,6 +84,7 @@ vista\vistaAsignarCurso.class
 vista\vistaBeneficiarios$5.class
 vista\vistaMenuMantenedores$4.class
 vista\vistaMenuPrincipal$4.class
+vista\vistaRegistroAsistencias$5.class
 vista\vistaUsuarios$5.class
 vista\vistaMenuMantenedores$3.class
 dao\daoAsignacionCurso.class
@@ -89,6 +94,7 @@ vista\vistaLogin$3.class
 controlador\controladorAgregarCurso.class
 modelo\persona.class
 vista\vistaMenuPrincipal$5.class
+vista\vistaRegistroAsistencias$4.class
 dao\daoCurso.class
 idao\IObserverVistaMenuPrincipal.class
 dao\daoAsistencias.class

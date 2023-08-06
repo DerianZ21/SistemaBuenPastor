@@ -7,13 +7,29 @@ package vista;
 
 import com.toedter.calendar.JDateChooser;
 import controlador.controladorAsistencias;
+import controlador.controladorBeneficiario;
 import java.awt.Container;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import modelo.curso;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -35,8 +51,24 @@ public class vistaRegistroAsistencias extends javax.swing.JFrame {
         // Agregar el JDateChooser al JFrame
         Container contentPane = this.getContentPane();
         contentPane.add(jDateChooser3);
+        controlador.llenarCbxCursoFecha();
         
-        controlador.llenarCbxCurso();
+        
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        // Agregar un WindowListener para controlar el cierre de la ventana
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Aquí puedes realizar acciones adicionales antes de cerrar la vista,
+                // o mostrar un cuadro de diálogo de confirmación para cerrar.
+                // Por ejemplo:
+                int opcion = JOptionPane.showConfirmDialog(vistaRegistroAsistencias.this, "¿Deseas cerrar la ventana?", "Confirmar cierre", JOptionPane.YES_NO_OPTION);
+                if (opcion == JOptionPane.YES_OPTION) {
+                    
+                    dispose();
+                }
+            }
+        });
     }
 
     /**
@@ -55,7 +87,7 @@ public class vistaRegistroAsistencias extends javax.swing.JFrame {
         Jbtn_BuscarAsistencia = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblBeneficiariosCurso = new javax.swing.JTable();
-        jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        dtcFechaActual = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
         Jbtn_GenerarReporteEnPdf = new javax.swing.JButton();
         cbxCursos = new javax.swing.JComboBox<>();
@@ -72,6 +104,11 @@ public class vistaRegistroAsistencias extends javax.swing.JFrame {
         Jbtn_guardar.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         Jbtn_guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/IconoGuardar.png"))); // NOI18N
         Jbtn_guardar.setText("GUARDAR");
+        Jbtn_guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jbtn_guardarActionPerformed(evt);
+            }
+        });
         jPanel2.add(Jbtn_guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 472, -1, 100));
 
         jLabel4.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
@@ -109,8 +146,8 @@ public class vistaRegistroAsistencias extends javax.swing.JFrame {
 
         jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 127, 1054, 322));
 
-        jDateChooser3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(jDateChooser3, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 42, 172, 27));
+        dtcFechaActual.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(dtcFechaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 42, 172, 27));
 
         jLabel5.setBackground(new java.awt.Color(204, 204, 255));
         jLabel5.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
@@ -120,6 +157,11 @@ public class vistaRegistroAsistencias extends javax.swing.JFrame {
         Jbtn_GenerarReporteEnPdf.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         Jbtn_GenerarReporteEnPdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/pdf-icon.png"))); // NOI18N
         Jbtn_GenerarReporteEnPdf.setText("GENERAR REPORTES");
+        Jbtn_GenerarReporteEnPdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jbtn_GenerarReporteEnPdfActionPerformed(evt);
+            }
+        });
         jPanel2.add(Jbtn_GenerarReporteEnPdf, new org.netbeans.lib.awtextra.AbsoluteConstraints(656, 471, -1, 102));
 
         jPanel2.add(cbxCursos, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, 220, -1));
@@ -144,6 +186,21 @@ public class vistaRegistroAsistencias extends javax.swing.JFrame {
     private void Jbtn_BuscarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbtn_BuscarAsistenciaActionPerformed
         controlador.consultarBeneficiario(tblBeneficiariosCurso);
     }//GEN-LAST:event_Jbtn_BuscarAsistenciaActionPerformed
+
+    private void Jbtn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbtn_guardarActionPerformed
+        
+        controlador.insertarAsistencias();
+    }//GEN-LAST:event_Jbtn_guardarActionPerformed
+
+    private void Jbtn_GenerarReporteEnPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jbtn_GenerarReporteEnPdfActionPerformed
+        try {
+            generarListaAsistencias();
+        } catch (SQLException ex) {
+            Logger.getLogger(vistaBeneficiarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(vistaBeneficiarios.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }//GEN-LAST:event_Jbtn_GenerarReporteEnPdfActionPerformed
 
  
     /**
@@ -188,6 +245,34 @@ public class vistaRegistroAsistencias extends javax.swing.JFrame {
         });
     }
     
+    private void generarListaAsistencias() throws SQLException, JRException {
+    Connection conexion;
+    try {
+        String usuario = "postgres";
+        String contrasena = "d123456";
+        String base = "bdescuela";
+
+        conexion = DriverManager.getConnection("jdbc:postgresql://127.0.0.1/" + base + "?" + "user=" + usuario + "&password=" + contrasena);
+
+        conexion.setAutoCommit(false);
+
+        if (conexion != null) {
+            System.out.println("Conexion lista");
+        }
+
+        String report = System.getProperty("user.dir") + "/src/main/resources/report1.jrxml";
+
+        JasperReport jasperReport = JasperCompileManager.compileReport(report);
+
+        // No se definen parámetros para el informe
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conexion);
+
+        JasperViewer.viewReport(jasperPrint, false);
+    } catch (JRException ex) {
+        Logger.getLogger(controladorBeneficiario.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }
     
     
 
@@ -205,7 +290,7 @@ public class vistaRegistroAsistencias extends javax.swing.JFrame {
     private javax.swing.JButton Jbtn_GenerarReporteEnPdf;
     private javax.swing.JButton Jbtn_guardar;
     private javax.swing.JComboBox<curso> cbxCursos;
-    public com.toedter.calendar.JDateChooser jDateChooser3;
+    public com.toedter.calendar.JDateChooser dtcFechaActual;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -221,6 +306,26 @@ public class vistaRegistroAsistencias extends javax.swing.JFrame {
     public void setCbxCursos(JComboBox<curso> cbxCursos) {
         this.cbxCursos = cbxCursos;
     }
+
+    public JDateChooser getDtcFechaActual() {
+        return dtcFechaActual;
+    }
+
+    public void setDtcFechaActual(JDateChooser dtcFechaActual) {
+        this.dtcFechaActual = dtcFechaActual;
+    }
+
+    public JTable getTblBeneficiariosCurso() {
+        return tblBeneficiariosCurso;
+    }
+
+    public void setTblBeneficiariosCurso(JTable tblBeneficiariosCurso) {
+        this.tblBeneficiariosCurso = tblBeneficiariosCurso;
+    }
+    
+    
+    
+    
 
     
 }

@@ -516,7 +516,6 @@ public class daoBeneficiario extends conexion implements IBeneficiario {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error dao beneficiario obtener inBeneficiario:" + e.toString());
         }
-        
         return idBeneficiario;
         
     }

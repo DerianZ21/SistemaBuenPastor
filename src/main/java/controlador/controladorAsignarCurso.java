@@ -45,9 +45,9 @@ public class controladorAsignarCurso {
                 vistaAsignarCurso.notifyObservers();
                 daoAsignacionCurso.insertarAsignacionCurso(asigcu);
                 JOptionPane.showMessageDialog(vistaAsignarCurso, "Se asignó el nuevo curso");
-                    
-                
             }
         }
     }
+    
+    
 }

@@ -5,16 +5,10 @@
  */
 package idao;
 
-import java.util.ArrayList;
-import modelo.asistencias;
-
 /**
  *
  * @author Asus
  */
-public interface IAsistencias {
-    
-   public ArrayList<Object[]> consultarBeneficiarioCurso(int idCurso);
-   public boolean insertarAsistencia(asistencias asis);
-    
+public interface IObserverVistaLogin {
+    void abrirVentana();
 }

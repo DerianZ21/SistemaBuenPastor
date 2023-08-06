@@ -5,7 +5,10 @@
  */
 package vista;
 
+import idao.IObserverVistaLogin;
 import idao.IObserverVistaMenuPrincipal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 
 /**
@@ -16,6 +19,7 @@ public class vistaMenuPrincipal extends javax.swing.JFrame implements IObserverV
     vistaUsuarios vistaUsuarios = new vistaUsuarios();
     vistaBeneficiarios vistaBeneficiarios = new vistaBeneficiarios();
     vistaMenuMantenedores vistaMantenedores = new vistaMenuMantenedores();
+    vistaRegistroAsistencias vistaRegistroAsistencias = new vistaRegistroAsistencias();
     /**
      * Creates new form vistaMenuPrincipal
      */
@@ -29,6 +33,18 @@ public class vistaMenuPrincipal extends javax.swing.JFrame implements IObserverV
     @Override
     public void MostrarVentana() {
         this.setVisible(true);
+    }
+    
+    private List<IObserverVistaLogin> observers = new ArrayList<>();
+
+    public void addObserver(IObserverVistaLogin observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObservers() {
+        for (IObserverVistaLogin observer : observers) {
+            observer.abrirVentana();
+        }
     }
 
     /**
@@ -45,6 +61,7 @@ public class vistaMenuPrincipal extends javax.swing.JFrame implements IObserverV
         btnBeneficiarios = new javax.swing.JButton();
         btnMantenedores = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -99,8 +116,16 @@ public class vistaMenuPrincipal extends javax.swing.JFrame implements IObserverV
         });
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 340, 280, 290));
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/salirBtn (2).png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 100, 100));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoMenu.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -30, 1240, 730));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, -30, 1240, 730));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,8 +156,13 @@ public class vistaMenuPrincipal extends javax.swing.JFrame implements IObserverV
     }//GEN-LAST:event_btnMantenedoresActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        vistaRegistroAsistencias.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        notifyObservers();
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,6 +203,7 @@ public class vistaMenuPrincipal extends javax.swing.JFrame implements IObserverV
     private javax.swing.JButton btnBeneficiarios;
     private javax.swing.JButton btnMantenedores;
     private javax.swing.JButton btnUsuarios;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
