@@ -35,12 +35,21 @@ public class vistaUsuarios extends javax.swing.JFrame {
                 int opcion = JOptionPane.showConfirmDialog(vistaUsuarios.this, "¿Deseas cerrar la ventana?", "Confirmar cierre", JOptionPane.YES_NO_OPTION);
                 if (opcion == JOptionPane.YES_OPTION) {
                     dispose();
+                    vaciarCampos();
+                    btnInsertar.setEnabled(true);
                 }
             }
         });
     }
     
-    
+    public void vaciarCampos(){
+        txtIDUsuarios.setText("");
+        txtUsername.setText("");
+        txtNombreUsuarios.setText("");
+        txtApellidoUsuarios.setText("");
+        pswContrasenaUsuario.setText("");
+        pswConfirmarContrasena.setText("");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -201,10 +210,12 @@ public class vistaUsuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        controlador.insertarUsuario();
-        controlador.consultarUsuarios(tbListaUsuarios);
-        txtNombreUsuarios.setText("");
-        txtApellidoUsuarios.setText("");
+        int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas insertar este usuario?", "Confirmar Inserción", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            controlador.insertarUsuario();
+            controlador.consultarUsuarios(tbListaUsuarios);
+            vaciarCampos();
+        }
     }//GEN-LAST:event_btnInsertarActionPerformed
 
     private void tbListaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbListaUsuariosMouseClicked
@@ -218,21 +229,26 @@ public class vistaUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_tbListaUsuariosMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        controlador.modificarUsuario();
-        controlador.consultarUsuarios(tbListaUsuarios);
-        txtIDUsuarios.setText("");
-        txtNombreUsuarios.setText("");
-        txtApellidoUsuarios.setText("");
-        btnInsertar.setEnabled(true);
+        int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas modificar este usuario?", "Confirmar Modificación", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            controlador.modificarUsuario();
+            controlador.consultarUsuarios(tbListaUsuarios);
+            btnInsertar.setEnabled(true);
+            vaciarCampos();
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        controlador.eliminarUsuario();
-        controlador.consultarUsuarios(tbListaUsuarios);
-        txtIDUsuarios.setText("");
-        txtNombreUsuarios.setText("");
-        txtApellidoUsuarios.setText("");
-        btnInsertar.setEnabled(true);
+        int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas eliminar este usuario?", "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            controlador.eliminarUsuario();
+            controlador.consultarUsuarios(tbListaUsuarios);
+            txtIDUsuarios.setText("");
+            txtNombreUsuarios.setText("");
+            txtApellidoUsuarios.setText("");
+            btnInsertar.setEnabled(true);
+            this.vaciarCampos();
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**

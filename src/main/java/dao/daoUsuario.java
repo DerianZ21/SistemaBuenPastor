@@ -9,6 +9,7 @@ import conexion.conexion;
 import idao.IUsuario;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class daoUsuario extends conexion implements IUsuario{
         String consulta = "insert into usuarios (nombres, apellidos, username, contrasena)  values(?, ?, ?, ?);";
         try{
             Connection con = this.iniciarConexion();
+            
             CallableStatement cs = con.prepareCall(consulta);
             cs.setString(1, usu.getNombre());
             cs.setString(2, usu.getApellido());
@@ -67,7 +69,6 @@ public class daoUsuario extends conexion implements IUsuario{
             insertar = cs.execute();
             cs.close();
             con.close();
-            JOptionPane.showMessageDialog(null, "Se insertó correctamente");
         }catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERROR:"+e.toString());
         }
@@ -78,23 +79,49 @@ public class daoUsuario extends conexion implements IUsuario{
     @Override
     public boolean modificarUsuario(usuario usu) {
         boolean modificar = false;
-        try{
+        ArrayList<Object[]> listUsuarios = new ArrayList<>();
+        try {
             Connection con = this.iniciarConexion();
-            String consulta = "UPDATE usuarios set nombres = ?, apellidos = ? where id = ?;";
+            String consultaUserContra = "SELECT username, contrasena FROM usuarios where id=?;";
+            PreparedStatement pst = con.prepareStatement(consultaUserContra);
+            pst.setInt(1, usu.getId());
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                String username = rs.getString("username");
+                String contrasena = rs.getString("contrasena");
+
+                Object[] row = { username, contrasena };
+                listUsuarios.add(row);
+            }
+
+            rs.close();
+            pst.close();
+
+            String consulta = "UPDATE usuarios set username = ?, contrasena = ? where id = ?;";
             CallableStatement cs = con.prepareCall(consulta);
-            cs.setString(1, usu.getNombre());
-            cs.setString(2, usu.getApellido());
+
+            if (usu.getUsername().isEmpty()) {
+                cs.setString(1, (String) listUsuarios.get(0)[0]);
+            } else {
+                cs.setString(1, usu.getUsername());
+            }
+
+            if (usu.getContrasena().isEmpty()) {
+                cs.setString(2, (String) listUsuarios.get(0)[1]);
+            } else {
+                cs.setString(2, usu.getContrasena());
+            }
             cs.setInt(3, usu.getId());
 
-            modificar=cs.execute();
+            modificar = cs.execute();
             cs.close();
             con.close();
             JOptionPane.showMessageDialog(null, "Se modificó correctamente");
-        }catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "ERROR:"+e.toString());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "ERROR:" + e.toString());
         }
         return modificar;
-        
     }
     
     

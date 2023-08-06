@@ -41,6 +41,7 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
                 if (opcion == JOptionPane.YES_OPTION) {
                     notifyObservers();
                     dispose();
+                    vaciarCampos();
                 }
             }
         });
@@ -85,7 +86,7 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
                 txtNombre.setEditable(false);
                 txtApellido.setEditable(false);
                 break;
-            default:
+            case 2:
                 controladorAgregarBeneficiario.consultarMadres(tblPadres);
                 txtTipo.setText(opciones[2]);
                 btnAgregar.setEnabled(false);
@@ -93,7 +94,26 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
                 txtNombre.setEditable(false);
                 txtApellido.setEditable(false);
                 break;
+            default:
+                txtTipo.setText("");
         }
+    }
+    
+    public void vaciarCampos(){
+        txtCedula.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtTelefono.setText("");
+        txtDireccion.setText("");
+        txtEmail.setText("");
+        jdcFechaNacimiento.setDate(null);
+        txtCedulaMadre.setText("");
+        txtNombreMadre.setText("");
+        txtApellidoMadre.setText("");
+        txtCedulaPadre.setText("");
+        txtNombrePadre.setText("");
+        txtApellidoPadre.setText("");
+        txtTipo.setText("");
     }
 
     /**
@@ -344,8 +364,7 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
                 }
                 notifyObservers();
             }
-
-            
+            vaciarCampos();
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -360,7 +379,6 @@ public class vistaAgregarBeneficiario extends javax.swing.JFrame {
         txtCedula.setEditable(false);
         txtNombre.setEditable(false);
         txtApellido.setEditable(false);
-        
     }//GEN-LAST:event_tblPadresMouseClicked
 
     private void BtnRegresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresar1ActionPerformed

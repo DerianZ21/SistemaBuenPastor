@@ -109,6 +109,8 @@ public class vistaAgregarCurso extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         controlador.insertarCurso();
+        txtNombreCurso.setText("");
+        cbxTipoBeneficiario.setSelectedIndex(-1);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void BtnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegresarActionPerformed

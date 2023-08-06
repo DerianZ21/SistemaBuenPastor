@@ -74,6 +74,7 @@ public class vistaBeneficiarios extends javax.swing.JFrame implements IObserverV
     @Override
     public void ActualizarBeneficiario() {
         controlador.consultarBeneficiario(tblBeneficiario);
+        
     }
     
     @Override
@@ -398,9 +399,12 @@ public class vistaBeneficiarios extends javax.swing.JFrame implements IObserverV
     }// </editor-fold>//GEN-END:initComponents
 
     private void btmAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmAgregarActionPerformed
-        this.setEnabled(false);
         vistaAgregarBeneficiario.elegirTipo();
-        vistaAgregarBeneficiario.setVisible(true);
+        if("".equals(vistaAgregarBeneficiario.getTxtTipo().getText())){
+        }else{
+            this.setEnabled(false);
+            vistaAgregarBeneficiario.setVisible(true);  
+        }
     }//GEN-LAST:event_btmAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -417,6 +421,7 @@ public class vistaBeneficiarios extends javax.swing.JFrame implements IObserverV
             vistaModificarBeneficiario.setVisible(true);
             vistaModificarBeneficiario.setCedulaSeleccionada(cedulaActual);
         }
+        
     }//GEN-LAST:event_btnEditarBeneficiarioActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
